@@ -30,6 +30,15 @@
   .logoContainer {
     display: flex;
     align-items: center;
+    gap: 10px; /* Espacio entre imagen y texto */
+    text-decoration: none; /* Elimina subrayado del enlace */
+  }
+  
+  .logoText {
+    color: white; /* Color blanco para el texto */
+    font-size: 1.8rem;
+    font-weight: bold;
+    transition: color 0.3s ease;
   }
   
   .logoImage {

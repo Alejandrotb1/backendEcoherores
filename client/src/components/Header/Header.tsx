@@ -1,11 +1,21 @@
 import React from 'react';
 import styles from './Header.module.css';
+import logoImage from '../../assets/logo-imagen.png'; // Ajusta la ruta de tu imagen
 
 const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <a href="/" className={styles.logo}>EcoHeroes</a>
+        {/* Contenedor del logo (texto + imagen) */}
+        <a href="/" className={styles.logoContainer}>
+          <img 
+            src={logoImage} 
+            alt="Logo EcoHeroes" 
+            className={styles.logoImage}
+          />
+          <span className={styles.logoText}>EcoHeroes</span>
+        </a>
+
         <nav className={styles.nav}>
           <a href="/">Inicio</a>
           <a href="/solicitar-recojo">Solicitar Recojo</a>
