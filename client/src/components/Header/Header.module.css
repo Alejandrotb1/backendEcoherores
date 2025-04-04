@@ -1,0 +1,117 @@
+/* ============== */
+/* BASE DEL HEADER */
+/* ============== */
+.header {
+    background-color: #3d3e40;
+    padding: 1rem 0;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* ============== */
+  /* CONTENEDOR PRINCIPAL */
+  /* ============== */
+  .container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* ============== */
+  /* LOGO */
+  /* ============== */
+  .logoContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre imagen y texto */
+    text-decoration: none; /* Elimina subrayado del enlace */
+  }
+  
+  .logoText {
+    color: white; /* Color blanco para el texto */
+    font-size: 1.8rem;
+    font-weight: bold;
+    transition: color 0.3s ease;
+  }
+  
+  .logoImage {
+    height: 50px; /* Ajusta esta medida según tu logo */
+    width: auto;
+    transition: transform 0.3s ease;
+  }
+  
+  .logoImage:hover {
+    transform: scale(1.05);
+  }
+  
+  /* ============== */
+  /* MENÚ DE NAVEGACIÓN */
+  /* ============== */
+  .nav {
+    display: flex;
+    gap: 2.5rem;
+  }
+  
+  .nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+  
+  /* Efecto subrayado animado */
+  .nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #4CAF50;
+    transition: width 0.3s ease;
+  }
+  
+  .nav a:hover {
+    color: #4CAF50;
+  }
+  
+  .nav a:hover::after {
+    width: 100%;
+  }
+  
+  /* ============== */
+  /* DISEÑO RESPONSIVE */
+  /* ============== */
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      padding: 1rem;
+      gap: 1rem;
+    }
+  
+    .logoImage {
+      height: 40px; /* Tamaño reducido para móviles */
+    }
+  
+    .nav {
+      width: 100%;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+  
+    .nav a {
+      font-size: 1rem;
+      padding: 0.5rem;
+    }
+  }

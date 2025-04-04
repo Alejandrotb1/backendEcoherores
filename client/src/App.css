@@ -1,43 +1,73 @@
-/* Elimina o modifica estas reglas */
-#root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 100%;
+/* Reset completo */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-/* Mantén estos estilos */
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+html, body, #root {
+  height: 100%;
+  width: 100%;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Estructura principal */
+.app {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+
+/* HEADER (Mantén tus estilos actuales) */
+
+/* Contenido principal - Pantalla completa */
+.main-content {
+  flex: 1;
+  width: 100%;
+  background: white;
+  padding: 2rem;
+}
+
+/* Footer - Pantalla completa */
+.footer {
+  width: 100%;
+  background: #3d3e40;
+  color: white;
+  padding: 1.5rem;
+}
+
+.footer-content {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* ------------------------------ */
+/* RESPONSIVE - Móviles/Tablets */
+/* ------------------------------ */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1rem;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .footer {
+    padding: 1rem;
+  }
+  
+  .footer-content p {
+    font-size: 0.9rem;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* Efectos opcionales */
+.footer-content p {
+  transition: transform 0.3s;
 }
 
+<<<<<<< HEAD
 .card {
   padding: 2em;
 }
@@ -60,4 +90,8 @@
   max-width: 1280px;
   margin: 0 auto;
   width: 100%;
+=======
+.footer-content p:hover {
+  transform: scale(1.02);
+>>>>>>> 1b2e445047755cbcf7a6a2f015ee63e3a59cdfcc
 }
