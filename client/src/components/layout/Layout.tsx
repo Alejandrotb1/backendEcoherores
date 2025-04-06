@@ -1,4 +1,4 @@
-import Footer from "../Footer/Footer";
+import Footer from "../footer/Footer";
 import Header from "../Header";
 
 interface Props {
@@ -10,7 +10,7 @@ export default function Layout({ children, title }: Props) {
   return (
     <div className="app">
       <Header />
-      <main>
+      <main className="my-8">
         <div className="container py-8">
           {title && (
             <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">

@@ -3,6 +3,7 @@ import App from '../App';
 import SolicitudPage from '../pages/Solicitud';
 import Inicio from '../pages/Inicio';
 import Contacto from '../pages/Contacto';
+import EcoHeroes from '../pages/EcoHeroes';
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
       {
         path: 'solicitar-recojo',
         element: <SolicitudPage />,
+      },
+      {
+        path: 'ecoheroes',
+        element: <EcoHeroes />,
       },
       {
         path: 'contacto',
