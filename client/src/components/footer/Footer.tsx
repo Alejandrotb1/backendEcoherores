@@ -1,61 +1,57 @@
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaPaperPlane } from 'react-icons/fa';
-import './Footer.css';
+import { Link } from 'react-router-dom';
+import styles from './Footer.module.css';
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer className="final-footer">
-      {/* Sección izquierda: Copyright + íconos */}
-      <div className="footer-section">
-        <div className="copyright">
-          <p>Copyright © 2015 Charlatanthus</p>
-          <p>All rights reserved</p>
+    <footer className={styles.footer}>
+      <div className={styles.container}>
+        <div className={styles.section}>
+          <div className={styles.copyright}>
+            <p>Copyright © 2015 Charlatanthus</p>
+            <p>All rights reserved</p>
+            <div className={styles.socialLinks}>
+              <a href="#" aria-label="Facebook"><FaFacebook /></a>
+              <a href="#" aria-label="Twitter"><FaTwitter /></a>
+              <a href="#" aria-label="Instagram"><FaInstagram /></a>
+              <a href="#" aria-label="LinkedIn"><FaLinkedin /></a>
+            </div>
+          </div>
         </div>
-        <div className="social-icons">
-          <FaFacebook className="icon" />
-          <FaTwitter className="icon" />
-          <FaInstagram className="icon" />
-          <FaLinkedin className="icon" />
-        </div>
-      </div>
 
-      {/* Company */}
-      <div className="footer-section">
-        <div className="footer-col">
+        <div className={styles.section}>
           <h3>Company</h3>
           <ul>
-            <li>About us</li>
-            <li>Blog</li>
-            <li>Contact us</li>
-            <li>Photos</li>
-            <li>Terminicals</li>
+            <li><Link to="/about">About us</Link></li>
+            <li><Link to="/blog">Blog</Link></li>
+            <li><Link to="/contact">Contact us</Link></li>
+            <li><Link to="/photos">Photos</Link></li>
+            <li><Link to="/terminals">Terminals</Link></li>
           </ul>
         </div>
-      </div>
 
-      {/* Soporte */}
-      <div className="footer-section">
-        <div className="footer-col">
+        <div className={styles.section}>
           <h3>Soporte</h3>
           <ul>
-            <li>Help owner</li>
-            <li>Terms of service</li>
-            <li>Legal</li>
-            <li>Privacy policy</li>
-            <li>Status</li>
+            <li><Link to="/help">Help owner</Link></li>
+            <li><Link to="/terms">Terms of service</Link></li>
+            <li><Link to="/legal">Legal</Link></li>
+            <li><Link to="/privacy">Privacy policy</Link></li>
+            <li><Link to="/status">Status</Link></li>
           </ul>
         </div>
-      </div>
 
-      <div className="footer-section">
-        <div className="footer-col">
-          <h3>Contactanos</h3>
-          <div className="contact-input">
-            <input 
-              type="email" 
-              placeholder="Tu email" 
-              aria-label="Ingresa tu email"
+        <div className={styles.section}>
+          <h3>Contáctanos</h3>
+          <div className={styles.contactForm}>
+            <input
+              type="email"
+              placeholder="Tu email"
+              className={styles.input}
             />
-            <FaPaperPlane className="telegram-icon" />
+            <button className={styles.submitButton}>
+              <span>➔</span>
+            </button>
           </div>
         </div>
       </div>

@@ -1,29 +1,22 @@
+import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
-import logoImage from '../../assets/logo-imagen.webp'; // Ajusta la ruta de tu imagen
+import logo from '../../assets/logo-imagen.webp';
 
-const Header = () => {
+export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        {/* Contenedor del logo (texto + imagen) */}
-        <a href="/" className={styles.logoContainer}>
-          <img 
-            src={logoImage} 
-            alt="Logo EcoHeroes" 
-            className={styles.logoImage}
-          />
+        <Link to="/" className={styles.logoContainer}>
+          <img src={logo} alt="EcoHeroes Logo" className={styles.logoImage} />
           <span className={styles.logoText}>EcoHeroes</span>
-        </a>
-
+        </Link>
         <nav className={styles.nav}>
-          <a href="/">Inicio</a>
-          <a href="/solicitar-recojo">Solicitar Recojo</a>
-          <a href="/ecoheroes">EcoHeroes</a>
-          <a href="/contacto">Contacto</a>
+          <Link to="/">Inicio</Link>
+          <Link to="/solicitar-recojo">Solicitar Recojo</Link>
+          <Link to="/ecoheroes">EcoHeroes</Link>
+          <Link to="/contacto">Contacto</Link>
         </nav>
       </div>
     </header>
   );
-};
-
-export default Header;
+}

@@ -1,13 +1,16 @@
-import './App.css';
-import Layout from './components/layout/Layout';
+import { Outlet } from 'react-router-dom';
+import Header from './components/Header/Header';
+import Footer from './components/footer/Footer';
 
 function App() {
-
   return (
-    <Layout title='Inicio'>
-
-     <h2>hola</h2>
-    </Layout>
+    <div className="app">
+      <Header />
+      <main>
+        <Outlet /> {/* Aquí se renderizarán las páginas */}
+      </main>
+      <Footer />
+    </div>
   );
 }
 

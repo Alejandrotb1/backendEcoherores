@@ -1,4 +1,4 @@
-import Footer from "../footer/Footer";
+import Footer from "../Footer/Footer";
 import Header from "../Header";
 
 interface Props {
@@ -8,12 +8,18 @@ interface Props {
 
 export default function Layout({ children, title }: Props) {
   return (
-    <div className="flex flex-col min-h-screen items-center">
+    <div className="app">
       <Header />
-      <section className="mx-4 py-2 w-[90%]">
-        <h1>{title}</h1>
-        {children}
-      </section>
+      <main>
+        <div className="container py-8">
+          {title && (
+            <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
+              {title}
+            </h1>
+          )}
+          {children}
+        </div>
+      </main>
       <Footer />
     </div>
   );

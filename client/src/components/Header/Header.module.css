@@ -15,10 +15,10 @@
   /* CONTENEDOR PRINCIPAL */
   /* ============== */
   .container {
-    max-width: 1200px;
     width: 100%;
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -30,25 +30,20 @@
   .logoContainer {
     display: flex;
     align-items: center;
-    gap: 10px; /* Espacio entre imagen y texto */
-    text-decoration: none; /* Elimina subrayado del enlace */
-  }
-  
-  .logoText {
-    color: white; /* Color blanco para el texto */
-    font-size: 1.8rem;
-    font-weight: bold;
-    transition: color 0.3s ease;
+    gap: 1rem;
+    text-decoration: none;
   }
   
   .logoImage {
-    height: 50px; /* Ajusta esta medida según tu logo */
+    height: 40px;
     width: auto;
-    transition: transform 0.3s ease;
+    object-fit: contain;
   }
   
-  .logoImage:hover {
-    transform: scale(1.05);
+  .logoText {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
   }
   
   /* ============== */
@@ -56,17 +51,17 @@
   /* ============== */
   .nav {
     display: flex;
-    gap: 2.5rem;
+    gap: 2rem;
   }
   
   .nav a {
     color: white;
     text-decoration: none;
+    font-size: 1rem;
     font-weight: 500;
-    font-size: 1.1rem;
+    transition: color 0.3s ease;
     padding: 0.5rem 0;
     position: relative;
-    transition: color 0.3s ease;
   }
   
   /* Efecto subrayado animado */
@@ -94,24 +89,41 @@
   /* ============== */
   @media (max-width: 768px) {
     .container {
-      flex-direction: column;
-      padding: 1rem;
-      gap: 1rem;
-    }
-  
-    .logoImage {
-      height: 40px; /* Tamaño reducido para móviles */
+      padding: 0 1rem;
     }
   
     .nav {
-      width: 100%;
-      justify-content: space-around;
-      flex-wrap: wrap;
       gap: 1rem;
     }
   
+    .logoText {
+      font-size: 1.25rem;
+    }
+  
+    .logoImage {
+      height: 35px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .container {
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1rem;
+    }
+  
+    .nav {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+  
     .nav a {
-      font-size: 1rem;
-      padding: 0.5rem;
+      font-size: 0.9rem;
+      padding: 0.25rem 0.5rem;
+    }
+  
+    .logoImage {
+      height: 30px;
     }
   }
