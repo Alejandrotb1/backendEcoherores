@@ -1,6 +1,5 @@
-import React from 'react';
 import styles from './Header.module.css';
-import logoImage from '../../assets/logo-imagen.png'; // Ajusta la ruta de tu imagen
+import logoImage from '../../assets/logo-imagen.webp'; // Ajusta la ruta de tu imagen
 
 const Header = () => {
   return (
