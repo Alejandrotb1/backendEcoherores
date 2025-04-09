@@ -1,19 +1,17 @@
 import React from 'react';
-import styles from './Inicio.module.css';
+import Hero from '../components/Hero';
+import Features from '../components/Features';
+import WhiteSection from '../components/WhiteSection';
+import BlackSection, { CuidaPlaneta } from '../components/BlackSection';
 
-const Inicio: React.FC = () => {
+const Inicio = () => {
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Bienvenido a EcoHeroes</h1>
-      <p className={styles.description}>
-        Somos tu aliado en la gestión responsable de residuos. 
-        Ayúdanos a hacer del mundo un lugar más limpio y sostenible.
-      </p>
-      <div className={styles.ctaContainer}>
-        <a href="/solicitar-recojo" className={styles.ctaButton}>
-          Solicitar Recojo
-        </a>
-      </div>
+    <div className="min-h-screen">
+      <Hero />
+      <Features />
+      <WhiteSection />
+      <BlackSection />
+      <CuidaPlaneta />
     </div>
   );
 };

@@ -8,17 +8,15 @@ interface Props {
 
 export default function Layout({ children, title }: Props) {
   return (
-    <div className="app">
+    <div className="w-full min-w-full">
       <Header />
-      <main className="my-8">
-        <div className="container py-8">
-          {title && (
-            <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
-              {title}
-            </h1>
-          )}
-          {children}
-        </div>
+      <main className="w-full min-w-full">
+        {title && (
+          <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
+            {title}
+          </h1>
+        )}
+        {children}
       </main>
       <Footer />
     </div>
