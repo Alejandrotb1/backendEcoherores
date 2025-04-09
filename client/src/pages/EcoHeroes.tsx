@@ -6,13 +6,12 @@ export default function EcoHeroes() {
     <div className="flex flex-wrap justify-center sm gap-4">
       {temporalRecolectores.map((recolector) => (
         <RecolectorCard
-          key={recolector.id}
           rate={recolector.rate}
           name={recolector.name}
-          description={recolector.description}
+          ci={recolector.ci}
+          zoneRecolector={recolector.zoneRecolector}
           photo={recolector.photo}
           credentialNumber={recolector.credentialNumber}
-          id={recolector.id}
         />
       ))}
     </div>
