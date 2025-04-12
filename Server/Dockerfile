@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
     unzip \
-    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && rm -rf /var/lib/apt/lists/* \
     && docker-php-ext-install pdo pdo_pgsql mbstring exif pcntl bcmath gd zip opcache
 
 # Configuración de OPcache para producción
@@ -33,7 +33,7 @@ WORKDIR /var/www
 COPY composer.json composer.lock ./
 
 # Instalar dependencias sin dev (para producción)
-RUN composer install --no-dev --no-autoloader --no-scripts --no-interaction
+RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist --no-interaction
 
 # Copiar todo el código
 COPY . .
@@ -52,6 +52,7 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     libpq-dev \
+    && rm -rf /var/lib/apt/lists/* \
     && docker-php-ext-install pdo pdo_pgsql mbstring exif pcntl bcmath gd opcache
 
 # Configuración de PHP para producción
@@ -65,6 +66,11 @@ RUN chown -R www-data:www-data \
     /var/www/storage \
     /var/www/bootstrap/cache
 
+# Variables de entorno básicas para Laravel
+ENV APP_ENV=production \
+    APP_DEBUG=false \
+    LOG_CHANNEL=stderr
+
 # Health check para el contenedor
 HEALTHCHECK --interval=30s --timeout=3s \
     CMD curl -f http://localhost:8000 || exit 1
@@ -72,3 +78,4 @@ HEALTHCHECK --interval=30s --timeout=3s \
 EXPOSE 9000
 
 CMD ["php-fpm"]
+
