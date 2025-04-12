@@ -7,9 +7,11 @@ services:
     environment:
       POSTGRES_DB: ${DB_DATABASE:-ecoheroes}
       POSTGRES_USER: ${DB_USERNAME:-ecoheroes}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-secretEcoheroes}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secretHeroes}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     healthcheck:
       test:
         [
@@ -32,9 +34,9 @@ services:
     working_dir: /var/www
     volumes:
       - ./Server:/var/www
-      - /var/www/vendor
-      - /var/www/node_modules
-        - ./Server/.env:/var/www/.env
+      - /var/www/vendor # Mantiene las dependencias (vendor) solo dentro del contenedor
+      - /var/www/node_modules # Igual para node_modules, si aplica
+      # No montamos .env para que init.sh lo cree o actualice
     environment:
       - APP_ENV=${APP_ENV:-local}
       - APP_KEY=${APP_KEY:-}
@@ -43,7 +45,7 @@ services:
       - DB_PORT=5432
       - DB_DATABASE=${DB_DATABASE:-ecoheroes}
       - DB_USERNAME=${DB_USERNAME:-ecoheroes}
-      - DB_PASSWORD=${DB_PASSWORD:-secret}
+      - DB_PASSWORD=${DB_PASSWORD:-secretHeroes}
     depends_on:
       db:
         condition: service_healthy
@@ -51,11 +53,8 @@ services:
       - ecoheroes_network
     ports:
       - "8000:8000"
-    command: >
-      sh -c "php artisan key:generate &&
-             php artisan migrate --force &&
-             php artisan serve --host=0.0.0.0 --port=8000"
-
+    # Se ejecuta el script de inicialización al iniciar el contenedor.
+    command: ["sh", "-c", "chmod +x /var/www/init.sh && /var/www/init.sh "]
   # React Frontend (desarrollo)
   client:
     build:
