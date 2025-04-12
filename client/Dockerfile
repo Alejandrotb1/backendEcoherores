@@ -1,34 +1,25 @@
-# Etapa de desarrollo
-FROM node:18-alpine AS development
+# Etapa de desarrollo para React
 
+FROM node:22-alpine3.20 AS development
+# Establecer directorio de trabajo dentro del contenedor
 WORKDIR /usr/src/app
 
-# Instalar dependencias con cache
+# Copiar solo el package.json y package-lock.json primero para aprovechar caché de Docker
 COPY package.json package-lock.json ./
-RUN npm install --frozen-lockfile
 
-# Copiar el resto
+# Instalar dependencias usando npm ci para evitar cambios en el package-lock
+RUN npm ci
+
+# Copiar el resto del código al contenedor
 COPY . .
 
-# Variables de entorno para desarrollo
+# Definir variables de entorno si es necesario
 ENV NODE_ENV=development
-ENV VITE_API_URL=http://server:8000/api
+ENV VITE_API_URL=http://localhost:8000/api
 
+# Exponer el puerto que usará el servidor de desarrollo
 EXPOSE 5173
 
-CMD ["npm", "run", "dev"]
+# Comando por defecto para correr la app en modo desarrollo, permitiendo acceso desde fuera del contenedor
+CMD ["npm", "run", "dev", "--", "--host"]
 
-# ----------------------------------------
-# Etapa de producción
-FROM node:18-alpine AS builder
-
-WORKDIR /usr/src/app
-COPY . .
-RUN npm install && npm run build
-
-FROM nginx:alpine AS production
-COPY --from=builder /usr/src/app/dist /usr/share/nginx/html
-COPY --from=builder /usr/src/app/nginx.conf /etc/nginx/conf.d/default.conf
-
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]

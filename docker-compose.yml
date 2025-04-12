@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_DB: ${DB_DATABASE:-ecoheroes}
       POSTGRES_USER: ${DB_USERNAME:-ecoheroes}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-secret}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secretEcoheroes}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -34,7 +34,7 @@ services:
       - ./Server:/var/www
       - /var/www/vendor
       - /var/www/node_modules
-      - ./Server/.env:/var/www/.env
+        - ./Server/.env:/var/www/.env
     environment:
       - APP_ENV=${APP_ENV:-local}
       - APP_KEY=${APP_KEY:-}
@@ -75,25 +75,25 @@ services:
       - "5173:5173"
     networks:
       - ecoheroes_network
-    depends_on:
-      - server
+    # depends_on:
+    #   - server
     stdin_open: true
     tty: true
 
-  # Frontend para producción (opcional)
-  client-prod:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
-      target: production
-    container_name: ecoheroes_client_prod
-    restart: unless-stopped
-    networks:
-      - ecoheroes_network
-    ports:
-      - "80:80"
-    depends_on:
-      - server
+  # # Frontend para producción (opcional)
+  # client-prod:
+  #   build:
+  #     context: ./client
+  #     dockerfile: Dockerfile
+  #     target: production
+  #   container_name: ecoheroes_client_prod
+  #   restart: unless-stopped
+  #   networks:
+  #     - ecoheroes_network
+  #   ports:
+  #     - "80:80"
+  #   depends_on:
+  #     - server
 
 volumes:
   postgres_data:
