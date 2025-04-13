@@ -8,8 +8,8 @@ const Footer = () => {
       <div className={styles.container}>
         <div className={styles.section}>
           <div className={styles.copyright}>
-            <p>Copyright © 2015 Charlatanthus</p>
-            <p>All rights reserved</p>
+            <p>Copyright © 2025 ActualizacionII</p>
+            <p>Todos los derechos reservados</p>
             <div className={styles.socialLinks}>
               <a href="#" aria-label="Facebook"><FaFacebook /></a>
               <a href="#" aria-label="Twitter"><FaTwitter /></a>

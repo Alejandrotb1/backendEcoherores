@@ -15,9 +15,9 @@ const Hero = () => {
             Iniciar Sesión
           </button>
         </div>
-        <div className="w-full md:w-1/2 px-4 md:px-16">
+        <div className="w-full md:w-1/2 px-4 md:px-16 relative">
           <img 
-            src="/ecoheroes-logo.png" 
+            src="/src/assets/logo-imagen" 
             alt="EcoHeroes" 
             className="w-full h-auto object-contain"
           />

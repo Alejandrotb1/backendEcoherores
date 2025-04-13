@@ -16,10 +16,10 @@ const WhiteSection = () => {
             tambien puedes.
           </p>
         </div>
-        <div className="w-full md:w-1/2 flex justify-end">
+        <div className="w-full md:w-1/2 flex justify-end mr-16 p-3">
           <div className="text-right">
             <div className="flex flex-col items-start">
-              <div className="flex items-center mb-6">
+              <div className="flex items-center mb-10">
                 <img src={personaIcon} alt="Miembros" className="w-8 h-8 mr-4" />
                 <div className="text-left">
                   <p className="text-2xl font-bold text-gray-800">2,245,341</p>
