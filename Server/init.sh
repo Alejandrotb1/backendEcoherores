@@ -35,7 +35,7 @@ if [ ! -f "$ENV_FILE" ]; then
 
     echo "✅ Archivo .env generado correctamente."
 else
-    echo "ℹ️ Archivo .env ya existe, no se hará nadaAA."
+    echo "ℹ️ Archivo .env ya existe, no se hará nadaA."
 fi
 
 echo "📦 Ejecutando composer install..."

@@ -16,4 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+
 });
+
+//recolectores
+Route::apiResource('recolectores', \App\Http\Controllers\RecolectorController::class);
+Route::patch('recolectores/{id}/restore', [\App\Http\Controllers\RecolectorController::class, 'restore']);
+Route::put('recolectores/{id}/restore', [\App\Http\Controllers\RecolectorController::class, 'restore']);
+
+

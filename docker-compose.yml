@@ -55,6 +55,7 @@ services:
       - "8000:8000"
     # Se ejecuta el script de inicialización al iniciar el contenedor.
     command: ["sh", "-c", "chmod +x /var/www/init.sh && /var/www/init.sh "]
+
   # React Frontend (desarrollo)
   client:
     build:
