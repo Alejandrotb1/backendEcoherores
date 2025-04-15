@@ -54,7 +54,12 @@ services:
     ports:
       - "8000:8000"
     # Se ejecuta el script de inicialización al iniciar el contenedor.
-    command: ["sh", "-c", "chmod +x /var/www/init.sh && /var/www/init.sh "]
+    command:
+      [
+        "bash",
+        "-c",
+        "dos2unix /var/www/init.sh && chmod +x /var/www/init.sh && /var/www/init.sh",
+      ]
 
   # React Frontend (desarrollo)
   client:
