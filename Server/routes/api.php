@@ -25,3 +25,7 @@ Route::patch('recolectores/{id}/restore', [\App\Http\Controllers\RecolectorContr
 Route::put('recolectores/{id}/restore', [\App\Http\Controllers\RecolectorController::class, 'restore']);
 
 
+Route::apiResource('solicitudes', \App\Http\Controllers\SolicitudController::class);
+
+
+
