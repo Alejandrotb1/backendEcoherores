@@ -26,7 +26,7 @@ class SolicitudController extends Controller
     }
 
 
-    
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -52,22 +52,22 @@ class SolicitudController extends Controller
                 Rule::in(collect(TipoResiduo::cases())->pluck('value'))
             ],
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json([
                 'errors' => $validator->errors(),
                 'message' => 'Error de validación'
             ], 422);
         }
-    
+
         $solicitud = Solicitud::create($validator->validated());
-    
+
         return response()->json([
             'data' => $solicitud->load(['usuario', 'recolector']),
             'message' => 'Solicitud creada exitosamente'
         ], 201);
     }
-    
+
 
     /**
      * Display the specified resource.
@@ -89,7 +89,7 @@ class SolicitudController extends Controller
         ]);
     }
 
-    
+
     /**
      * Update the specified resource in storage.
      */
@@ -162,4 +162,62 @@ class SolicitudController extends Controller
             'message' => 'Solicitud eliminada exitosamente'
         ]);
     }
+public function listarPorUsuario($usuarioId)
+{
+    // Obtener las solicitudes del usuario con la relación 'recolector'
+    $solicitudes = Solicitud::with('recolector')
+        ->where('usuario_id', $usuarioId)
+        ->orderBy('fecha_solicitud', 'desc')
+        ->get();
+
+    // Si no hay solicitudes, devolver mensaje de "Usuario no encontrado"
+    if ($solicitudes->isEmpty()) {
+        return response()->json([
+            'message' => 'Usuario no encontrado'
+        ], 404); // 404 Not Found
+    }
+
+    // Obtener los datos del usuario una sola vez
+    $usuario = $solicitudes->first()->usuario;
+
+    // Eliminar la relación 'usuario' de cada solicitud para no repetirla
+    $solicitudes->each(function ($solicitud) {
+        $solicitud->setRelation('usuario', null);
+    });
+
+    // Retornar las solicitudes y los datos del usuario una sola vez
+    return response()->json([
+        'data' => $solicitudes,
+        'usuario' => $usuario,  // Datos del usuario una sola vez
+        'message' => 'Solicitudes del usuario obtenidas exitosamente'
+    ]);
+}
+
+
+public function listarPorRecolector($recolectorId)
+{
+    // Obtener las solicitudes del recolector con la relación 'usuario' y 'recolector'
+    $solicitudes = Solicitud::with('usuario')
+        ->where('recolector_id', $recolectorId)
+        ->orderBy('fecha_programada', 'desc')
+        ->get();
+
+    // Obtener los datos del recolector una sola vez
+    $recolector = $solicitudes->isNotEmpty() ? $solicitudes->first()->recolector : null;
+
+    // Eliminar la relación 'recolector' de cada solicitud para no repetirla
+    $solicitudes->each(function ($solicitud) {
+        $solicitud->setRelation('recolector', null);
+    });
+
+    // Retornar las solicitudes y los datos del recolector una sola vez
+    return response()->json([
+        'data' => $solicitudes,
+        'recolector' => $recolector,  // Datos del recolector una sola vez
+        'message' => 'Solicitudes del recolector obtenidas exitosamente'
+    ]);
+}
+
+
+
 }

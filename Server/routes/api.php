@@ -14,6 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
+
+
+
+
+
+
+
+
+Route::resource('usuarios', UsuarioController::class);
+// Route::resource('roles', RolController::class);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 
@@ -26,6 +38,14 @@ Route::put('recolectores/{id}/restore', [\App\Http\Controllers\RecolectorControl
 
 
 Route::apiResource('solicitudes', \App\Http\Controllers\SolicitudController::class);
+// por usuario
+Route::get('/usuarios/{usuario_id}/solicitudes', [\App\Http\Controllers\SolicitudController::class, 'listarPorUsuario']);
+
+// por recolector
+Route::get('/recolectores/{recolector_id}/solicitudes', [\App\Http\Controllers\SolicitudController::class, 'listarPorRecolector']);
 
 
+Route::get('/solicitudes/recolector/{id}', [SolicitudController::class, 'listarPorRecolector']);
 
+
+Route::apiResource('puntuaciones', \App\Http\Controllers\PuntuacionController::class);
