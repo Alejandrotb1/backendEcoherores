@@ -7,11 +7,29 @@ use App\Models\Role;
 
 class RoleSeeder extends Seeder
 {
+     /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+
+
     public function run()
     {
-        // Utiliza el modelo Role para crear roles
-        Role::create(['role_name' => 'Admin']);
-        Role::create(['role_name' => 'User']);
-        Role::create(['role_name' => 'Moderator']);
+        Role::create([
+            'name' => 'Admin',
+            'description' => 'Administrator Role',
+            'status' => 1,
+        ]);
+
+        Role::create([
+            'name' => 'User',
+            'description' => 'Regular User Role',
+            'status' => 1, 
+        ]);
     }
 }
+
+
+
+

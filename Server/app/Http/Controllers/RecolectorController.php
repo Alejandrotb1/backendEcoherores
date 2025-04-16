@@ -48,13 +48,13 @@ class RecolectorController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'nombre' => 'required|string|max:255',
-                'apellido' => 'nullable|string|max:255',
-                'ci' => 'required|string|unique:recolectores,ci|max:20',
-                'telefono' => 'required|string|max:20',
-                'email' => 'required|email|unique:recolectores,email',
-                'direccion' => 'required|string|max:255',
-                'licencia' => 'required|string|max:50',
-                'estado' => 'nullable|string|in:activo,inactivo'
+                'apellido' => 'required|string|max:255',
+                'ci' => 'required|string|unique:recolectores,ci',
+                'telefono' => 'nullable|string|max:20',
+                'email' => 'nullable|email|unique:recolectores,email',
+                'direccion' => 'nullable|string',
+                'licencia' => ['nullable', Rule::in(['A', 'B', 'C', 'P'])],
+                'estado' => 'required|string|in:activo,inactivo',
             ]);
 
             if ($validator->fails()) {
@@ -65,13 +65,7 @@ class RecolectorController extends Controller
                 ], 422);
             }
 
-            // Establecer valores predeterminados
-            $datos = $request->all();
-            if (!isset($datos['estado'])) {
-                $datos['estado'] = 'activo';
-            }
-
-            $recolector = Recolector::create($datos);
+            $recolector = Recolector::create($request->all());
 
             return response()->json([
                 'success' => true,
@@ -124,25 +118,14 @@ class RecolectorController extends Controller
             $recolector = Recolector::findOrFail($id);
 
             $validator = Validator::make($request->all(), [
-                'nombre' => 'sometimes|required|string|max:255',
-                'apellido' => 'sometimes|nullable|string|max:255',
-                'ci' => [
-                    'sometimes',
-                    'required',
-                    'string',
-                    'max:20',
-                    Rule::unique('recolectores')->ignore($id)
-                ],
-                'telefono' => 'sometimes|required|string|max:20',
-                'email' => [
-                    'sometimes',
-                    'required',
-                    'email',
-                    Rule::unique('recolectores')->ignore($id)
-                ],
-                'direccion' => 'sometimes|required|string|max:255',
-                'licencia' => 'sometimes|required|string|max:50',
-                'estado' => 'sometimes|required|in:activo,inactivo'
+                'nombre' => 'sometimes|string|max:255',
+                'apellido' => 'sometimes|string|max:255',
+                'ci' => ['sometimes', 'string', Rule::unique('recolectores')->ignore($id)],
+                'telefono' => 'nullable|string|max:20',
+                'email' => ['nullable', 'email', Rule::unique('recolectores')->ignore($id)],
+                'direccion' => 'nullable|string',
+                'licencia' => ['nullable', Rule::in(['A', 'B', 'C', 'P'])],
+                'estado' => 'sometimes|string|in:activo,inactivo',
             ]);
 
             if ($validator->fails()) {
@@ -153,17 +136,7 @@ class RecolectorController extends Controller
                 ], 422);
             }
 
-            // Actualización directa campo por campo para asegurarnos que se apliquen los cambios
-            foreach ($request->all() as $key => $value) {
-                if (in_array($key, $recolector->getFillable())) {
-                    $recolector->$key = $value;
-                }
-            }
-
-            $recolector->save();
-
-            // Recargar el modelo para asegurar que devolvemos los datos actualizados
-            $recolector = $recolector->fresh();
+            $recolector->update($request->all());
 
             return response()->json([
                 'success' => true,
@@ -193,13 +166,11 @@ class RecolectorController extends Controller
         try {
             $recolector = Recolector::findOrFail($id);
 
-            // Cambio de estado en lugar de eliminar físicamente
-            $recolector->estado = 'inactivo';
-            $recolector->save();
+            $recolector->delete();
 
             return response()->json([
                 'success' => true,
-                'message' => 'Recolector marcado como inactivo exitosamente'
+                'message' => 'Recolector eliminado exitosamente'
             ], 200);
 
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {

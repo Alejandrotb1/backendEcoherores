@@ -1,43 +1,104 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Usuario;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class UsuarioController extends Controller
+class UserController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $usuarios = Usuario::with('roles')->get();  // Obtener todos los usuarios con sus roles
-        return response()->json($usuarios);
+        $users = User::all();
+        return view('Users.Index', [
+            'users' => $users,
+        ]);
     }
 
-    public function show($id)
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
-        $usuario = Usuario::with('roles')->findOrFail($id);  // Obtener un usuario por ID con sus roles
-        return response()->json($usuario);
+        $roles = Role::all();
+        return view('Users.Create', compact('roles'));
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        $usuario = Usuario::create($request->only('nombre', 'email', 'contraseña', 'telefono'));
-        $usuario->roles()->attach($request->roles);  // Asociar roles al usuario
-        return response()->json($usuario, 201);
+        $validatedData = $request->validate([
+            'role_id' => 'required|integer',
+            'name' => 'required|string|max:45',
+            'email' => 'required|email|max:45|unique:users,email',
+            'password' => 'required|string|min:6',
+            'phone' => 'required|string|max:45',
+            'status' => 'required|string|max:45',
+        ]);
+
+        $validatedData['password'] = bcrypt($validatedData['password']);
+
+        $user = User::create($validatedData);
+
+        return redirect()->route('users.index')
+                         ->with('success', 'Usuario creado exitosamente');
     }
 
-    public function update(Request $request, $id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
     {
-        $usuario = Usuario::findOrFail($id);
-        $usuario->update($request->only('nombre', 'email', 'contraseña', 'telefono'));
-        $usuario->roles()->sync($request->roles);  
-        return response()->json($usuario);
+        $user = User::findOrFail($id);
+        return view('Users.Show', [
+            'user' => $user,
+        ]);
     }
 
-    public function destroy($id)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
-        $usuario = Usuario::findOrFail($id);
-        $usuario->delete();
-        return response()->json(null, 204);
+        $user = User::findOrFail($id);
+        $roles = Role::all();
+        return view('Users.Edit', compact('user', 'roles'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $validatedData = $request->validate([
+            'role_id' => 'required|integer',
+            'name' => 'required|string|max:45',
+            'email' => 'required|email|max:45|unique:users,email',
+            'phone' => 'required|string|max:45',
+            'password' => 'required|string|min:6',
+            'status' => 'required|string|max:45',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->update($validatedData);
+
+        return redirect()->route('users.index')->with('success', 'Usuario actualizado exitosamente');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->route('users.index')
+                         ->with('success', 'Usuario eliminado exitosamente');
     }
 }

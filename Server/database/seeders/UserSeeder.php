@@ -11,19 +11,22 @@ class UserSeeder extends Seeder
     public function run()
     {
         // Crear usuario administrador
-        $user = User::create([
+        User::create([
+            'role_id' => 1,
             'name' => 'Admin Principal',
             'email' => 'admin@ecoheroes.com',
-            'password' => Hash::make('password'),
-            'phone' => '+15316166843',
+            'phone' => '555-555-5555',
+            'password' => Hash::make('admin'),
+            'status' => 'active',
+        ]);
+        User::create([
+            'role_id' => 2,
+            'name' => 'Admin',
+            'email' => 'admin@ecoheroe7s.com',
+            'phone' => '+15477545447',
+            'password' => Hash::make('123456'),
+            'status' => 'active',
         ]);
 
-        // Asignar rol de administrador
-        $user->roles()->attach(1); // Asumiendo que el rol de admin tiene ID = 1
-
-        // Crear otros usuarios
-        User::factory(5)->create()->each(function ($user) {
-            $user->roles()->attach(2); // Asignar rol de usuario
-        });
     }
 }

@@ -11,7 +11,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "55432:5432"
     healthcheck:
       test:
         [
@@ -56,9 +56,9 @@ services:
     # Se ejecuta el script de inicialización al iniciar el contenedor.
     command:
       [
-        "bash",
-        "-c",
-        "dos2unix /var/www/init.sh && chmod +x /var/www/init.sh && /var/www/init.sh",
+          "sh",
+          "-c",
+          "dos2unix /var/www/init.sh && chmod +x /var/www/init.sh && /var/www/init.sh",
       ]
 
   # React Frontend (desarrollo)

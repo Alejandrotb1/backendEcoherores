@@ -42,10 +42,12 @@ echo "📦 Ejecutando composer install..."
 composer install --no-interaction --prefer-dist
 
 echo "🔑 Generando clave de aplicación..."
-php artisan key:generate --force
+php artisan key:generate 
 
 echo "🧱 Ejecutando migraciones..."
-php artisan migrate --force
+
+php artisan migrate:fresh
+
 
 echo "🌐 Iniciando servidor Laravel..."
 php artisan serve --host=0.0.0.0 --port=8000
