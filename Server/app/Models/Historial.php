@@ -33,7 +33,9 @@ class Historial extends BaseModel
     // Accesor para tipo_evento
     public function setTipoEventoAttribute($value)
     {
-        $this->attributes['tipo_evento'] = TipoEventoHistoriales::from($value)->value;
+        /* $this->attributes['tipo_evento'] = TipoEventoHistoriales::from($value)->value; */
+        $this->attributes['tipo_evento'] = $value->value;
+
     }
 
     // Mutador para tipo_evento

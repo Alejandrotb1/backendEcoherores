@@ -8,6 +8,9 @@ use App\Enums\TipoResiduo;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Historial;
+use App\Enums\TipoEventoHistoriales;
+use Illuminate\Support\Facades\Auth;
 
 class SolicitudController extends Controller
 {
@@ -218,6 +221,38 @@ public function listarPorRecolector($recolectorId)
     ]);
 }
 
+//historiales
+public function cambiarEstado(Request $request, $id)
+{
+    $request->validate([
+        'estado' => 'required|string|in:pendiente,asignada,en_proceso,completada,cancelada',
+    ]);
 
+    $solicitud = Solicitud::findOrFail($id);
+
+    $estadoAnterior = $solicitud->estado;
+    $solicitud->estado = $request->estado;
+    $solicitud->save();
+
+    // Registrar en el historial
+    Historial::create([
+        /* 'usuario_id' => Auth::id(), // O el ID del admin si viene desde otro lado */
+        'usuario_id' => 1,
+        'solicitud_id' => $solicitud->id,
+        'tipo_evento' => match ($request->estado) {
+            'completada' => TipoEventoHistoriales::SolicitudCompletada,
+            'cancelada' => TipoEventoHistoriales::SolicitudCancelada,
+            'asignada' => TipoEventoHistoriales::SolicitudAsignada,
+            default => TipoEventoHistoriales::SolicitudCreada, // o un nuevo enum tipo 'EstadoCambiado'
+        },
+        'detalle' => "Estado cambiado de '{$estadoAnterior}' a '{$request->estado}'",
+        'fecha' => now(),
+    ]);
+
+    return response()->json([
+        'message' => 'Estado actualizado correctamente.',
+        'solicitud' => $solicitud,
+    ]);
+}
 
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Usuario;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class UsuarioController extends Controller
+class UserController extends Controller
 {
     public function index()
     {
@@ -30,7 +30,7 @@ class UsuarioController extends Controller
     {
         $usuario = Usuario::findOrFail($id);
         $usuario->update($request->only('nombre', 'email', 'contraseña', 'telefono'));
-        $usuario->roles()->sync($request->roles);  
+        $usuario->roles()->sync($request->roles);
         return response()->json($usuario);
     }
 

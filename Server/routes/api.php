@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::resource('usuarios', UsuarioController::class);
+Route::resource('usuarios', \App\Http\Controllers\UserController::class);
 // Route::resource('roles', RolController::class);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -43,9 +43,11 @@ Route::get('/usuarios/{usuario_id}/solicitudes', [\App\Http\Controllers\Solicitu
 
 // por recolector
 Route::get('/recolectores/{recolector_id}/solicitudes', [\App\Http\Controllers\SolicitudController::class, 'listarPorRecolector']);
+//historiales cambiar estado
+Route::patch('/solicitudes/{recolector_id}/estado', [\App\Http\Controllers\SolicitudController::class, 'cambiarEstado']);
 
 
-Route::get('/solicitudes/recolector/{id}', [SolicitudController::class, 'listarPorRecolector']);
+/* Route::get('/solicitudes/recolector/{id}', [SolicitudController::class, 'listarPorRecolector']); */
 
 
 Route::apiResource('puntuaciones', \App\Http\Controllers\PuntuacionController::class);

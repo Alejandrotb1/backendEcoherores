@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+
 class Recolector extends BaseModel
 {
+    use HasFactory;
     protected $table = 'recolectores';
 
     protected $fillable = [

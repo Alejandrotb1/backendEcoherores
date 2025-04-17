@@ -5,7 +5,9 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Database\Seeders\RoleSeeder;
-use Database\Seeders\UserSeeder; 
+use Database\Seeders\UserSeeder;
+use App\Models\Recolector;
+
 
 
 class DatabaseSeeder extends Seeder
@@ -27,5 +29,10 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
         ]);
+
+
+        /* Recolector::factory(10)->create(); */
+                \App\Models\Recolector::factory(500)->create();
+
     }
 }
