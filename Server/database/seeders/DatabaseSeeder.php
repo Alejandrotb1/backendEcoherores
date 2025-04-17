@@ -32,7 +32,8 @@ class DatabaseSeeder extends Seeder
 
 
         /* Recolector::factory(10)->create(); */
-                \App\Models\Recolector::factory(500)->create();
+                \App\Models\Recolector::factory(50)->create();
+                \App\Models\Solicitud::factory(500)->create();
 
     }
 }

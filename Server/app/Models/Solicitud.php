@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use App\Enums\TamanoResiduo;
+
+
+    use App\Enums\TamanoResiduo;
 use App\Enums\TipoResiduo;
+use App\Enums\TipoEventoSolicitud; // <-- Aca lo importás
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Solicitud extends BaseModel
@@ -20,15 +23,22 @@ class Solicitud extends BaseModel
         'detalles_casa',
         'tipo_material',
         'detalles_adicionales',
-        'estado',
+        'estado_solicitud',
         'fecha_solicitud',
         'fecha_programada',
         'fecha_recojo',
         'latitud',
         'longitud',
-        'tamano_residuo', // Nuevo campo
-        'tipo_residuo',   // Nuevo campo
+        'tamano_residuo',
+        'tipo_residuo',
     ];
+
+    protected $casts = [
+        'estado_solicitud' => TipoEventoSolicitud::class, // 🎯 Esto es lo que faltaba
+    ];
+
+    // ... tus relaciones y mutators/accesors
+
 
     // Relaciones
 

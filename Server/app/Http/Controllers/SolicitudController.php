@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Historial;
 use App\Enums\TipoEventoHistoriales;
 use Illuminate\Support\Facades\Auth;
+use App\Enums\TipoEventoSolicitud;
+
 
 class SolicitudController extends Controller
 {
@@ -40,7 +42,10 @@ class SolicitudController extends Controller
             'detalles_casa' => 'nullable|string',
             'tipo_material' => 'required|string|max:255',
             'detalles_adicionales' => 'nullable|string',
-            'estado' => 'sometimes|string|max:50',
+            'estado_solicitud' => [
+    'nullable', // o 'required' si querés que lo manden siempre
+    Rule::in(collect(TipoEventoSolicitud::cases())->pluck('value'))
+],
             'fecha_solicitud' => 'required|date',
             'fecha_programada' => 'nullable|date',
             'fecha_recojo' => 'nullable|date',
@@ -63,13 +68,22 @@ class SolicitudController extends Controller
             ], 422);
         }
 
-        $solicitud = Solicitud::create($validator->validated());
+        /* $solicitud = Solicitud::create($validator->validated()); */
+
+         $data = $validator->validated();
+
+    // Si no vino el estado, lo seteamos a pendiente por defecto
+    $data['estado_solicitud'] ??= TipoEventoSolicitud::Pendiente->value;
+
+    $solicitud = Solicitud::create($data);
 
         return response()->json([
             'data' => $solicitud->load(['usuario', 'recolector']),
             'message' => 'Solicitud creada exitosamente'
         ], 201);
     }
+
+
 
 
     /**

@@ -27,16 +27,24 @@ class UserSeeder extends Seeder
             $user->roles()->attach(2); // Asignar rol de usuario
         });
 
-                // Crear 500 usuarios con rol 'User'
-        $userRole = Role::where('role_name', 'User')->first();
-        User::factory(500)->create([
-            'role_id' => $userRole->id,
-        ]);
 
-        // Crear 10 usuarios con rol 'Moderator'
+
+         // Buscar roles por nombre
+        $userRole = Role::where('role_name', 'User')->first();
         $moderatorRole = Role::where('role_name', 'Moderator')->first();
-        User::factory(10)->create([
-            'role_id' => $moderatorRole->id,
-        ]);
+
+        // Crear 500 usuarios y asignar rol 'User'
+        User::factory(50)->create()->each(function ($user) use ($userRole) {
+            if ($userRole) {
+                $user->roles()->attach($userRole->id);
+            }
+        });
+
+        // Crear 10 usuarios y asignar rol 'Moderator'
+        User::factory(5)->create()->each(function ($user) use ($moderatorRole) {
+            if ($moderatorRole) {
+                $user->roles()->attach($moderatorRole->id);
+            }
+        });
     }
 }
