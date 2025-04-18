@@ -9,17 +9,19 @@ class RecolectorFactory extends Factory
 {
     protected $model = Recolector::class;
 
-    public function definition(): array
+    public function definition()
     {
         return [
-            'nombre' => $this->faker->firstName(),
-            'apellido' => $this->faker->lastName(),
-            'ci' => $this->faker->unique()->numerify('########'),
-            'telefono' => $this->faker->phoneNumber(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'direccion' => $this->faker->address(),
-            'licencia' => $this->faker->randomElement(['A', 'B', 'C', 'P']),
+            'nombre' => $this->faker->firstName,
+            'apellido' => $this->faker->lastName,
+            'ci' => $this->faker->numerify('########'),
+            'telefono' => $this->faker->phoneNumber,
+            'email' => $this->faker->unique()->safeEmail,
+            'direccion' => $this->faker->address,
+                    'licencia' => $this->faker->randomElement(['A', 'B', 'C', 'P', null]),
+
             'estado' => $this->faker->randomElement(['activo', 'inactivo']),
         ];
     }
-} 
+}
+

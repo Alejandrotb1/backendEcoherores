@@ -224,4 +224,17 @@ class RecolectorController extends Controller
             ], 500);
         }
     }
+    //solicitudes de cada recolector
+    public function listarPorRecolector($recolectorId)
+{
+    $solicitudes = Solicitud::where('recolector_id', $recolectorId)
+        ->orderBy('fecha_programada', 'desc')
+        ->get();
+
+    return response()->json([
+        'data' => $solicitudes,
+        'message' => 'Solicitudes del recolector obtenidas exitosamente'
+    ]);
+}
+
 }

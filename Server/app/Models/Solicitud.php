@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
-use App\Enums\TipoSolicitud;
-use App\Enums\TamanoResiduo;
+
+
+    use App\Enums\TamanoResiduo;
 use App\Enums\TipoResiduo;
+use App\Enums\TipoEventoSolicitud; // <-- Aca lo importás
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,25 +19,27 @@ class Solicitud extends Model
     protected $fillable = [
         'usuario_id',
         'recolector_id',
-        'tipo',
-        'descripcion',
-        'direccion',
-        'estado',
+        'direccion_recojo',
+        'numero_referencia',
+        'detalles_casa',
+        'tipo_material',
+        'detalles_adicionales',
+        'estado_solicitud',
         'fecha_solicitud',
         'fecha_programada',
         'fecha_recojo',
+        'latitud',
+        'longitud',
         'tamano_residuo',
-        'tipo_residuo'
+        'tipo_residuo',
     ];
 
     protected $casts = [
-        'tipo' => TipoSolicitud::class,
-        'tamano_residuo' => TamanoResiduo::class,
-        'tipo_residuo' => TipoResiduo::class,
-        'fecha_solicitud' => 'datetime',
-        'fecha_programada' => 'datetime',
-        'fecha_recojo' => 'datetime',
+        'estado_solicitud' => TipoEventoSolicitud::class, // 🎯 Esto es lo que faltaba
     ];
+
+    // ... tus relaciones y mutators/accesors
+
 
     // Relaciones
 

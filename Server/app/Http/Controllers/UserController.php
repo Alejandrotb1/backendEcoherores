@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -54,10 +53,10 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $user = User::findOrFail($id);
-        return view('Users.Show', [
-            'user' => $user,
-        ]);
+        $usuario = Usuario::findOrFail($id);
+        $usuario->update($request->only('nombre', 'email', 'contraseña', 'telefono'));
+        $usuario->roles()->sync($request->roles);
+        return response()->json($usuario);
     }
 
     /**

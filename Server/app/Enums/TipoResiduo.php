@@ -26,5 +26,7 @@ enum TipoResiduo: string
             self::NUCLEAR => 'Residuos nucleares: Materiales radiactivos',
         };
     }
+
+    
 }
 

@@ -16,13 +16,21 @@ return new class extends Migration
         Schema::create('solicitudes', function (Blueprint $table) {
             $table->id(); // Id de la solicitud
             $table->unsignedBigInteger('usuario_id'); // Clave foránea a la tabla 'users'
-            $table->unsignedBigInteger('recolector_id'); // Clave foránea a la tabla 'recolectores'
+            $table->unsignedBigInteger('recolector_id')->nullable(); // Clave foránea a la tabla 'recolectores'
             $table->string('direccion_recojo'); // Dirección del recojo
             $table->string('numero_referencia'); // Número de referencia de la solicitud
             $table->text('detalles_casa'); // Detalles de la casa
             $table->enum('tipo_material', ['organico', 'inorganico_reciclable', 'inorganico_no_reciclable', 'peligroso', 'sanitario', 'electronico', 'construccion', 'nuclear']); // Tipo de material
             $table->text('detalles_adicionales')->nullable(); // Detalles adicionales
-            $table->string('estado')->default('pendiente'); // Estado de la solicitud (pendiente, completada, etc.)
+            /* $table->string('estado_solicitud')->default('pendiente'); // Estado de la solicitud (pendiente, completada, etc.) */
+            $table->enum('estado_solicitud', [
+    'pendiente',
+    'asignada',
+    'completada',
+    'cancelada',
+    'creada'
+])->default('pendiente');
+
             $table->timestamp('fecha_solicitud')->useCurrent(); // Fecha de solicitud
             $table->timestamp('fecha_programada')->nullable(); // Fecha programada para el recojo
             $table->timestamp('fecha_recojo')->nullable(); // Fecha de recojo real
@@ -30,6 +38,7 @@ return new class extends Migration
             $table->decimal('longitud', 11, 8); // Longitud de la ubicación
             $table->enum('tamano_residuo', ['pequeño', 'mediano', 'grande']); // Tamaño del residuo
             $table->enum('tipo_residuo', ['organico', 'inorganico_reciclable', 'inorganico_no_reciclable', 'peligroso', 'sanitario', 'electronico', 'construccion', 'nuclear']); // Tipo de residuo
+            $table->string('estado')->default('activo');
             $table->timestamps(); // Tiempos de creación y actualización
 
             // Claves foráneas

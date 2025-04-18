@@ -15,6 +15,22 @@ Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
 
+
+
+
+
+
+
+
+
+
+Route::resource('usuarios', \App\Http\Controllers\UserController::class);
+// Route::resource('roles', RolController::class);
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+
+});
+
 //recolectores
 
 Route::apiResource('recolectores', RecolectorController::class);
@@ -22,9 +38,23 @@ Route::patch('recolectores/{id}/restore', [\App\Http\Controllers\RecolectorContr
 Route::put('recolectores/{id}/restore', [\App\Http\Controllers\RecolectorController::class, 'restore']);
 
 
-//solicitudes
 Route::apiResource('solicitudes', \App\Http\Controllers\SolicitudController::class);
+//editar solicitud para el admin
+Route::patch('solicitudes/{id}/historial/update', [\App\Http\Controllers\SolicitudController::class, 'updateHistorialAdmin']);
+//listar el historial de una solicitud
+Route::get('solicitudes/{id}/historial', [\App\Http\Controllers\SolicitudController::class, 'getHistorial']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+// por usuario
+Route::get('/usuarios/{usuario_id}/solicitudes', [\App\Http\Controllers\SolicitudController::class, 'listarPorUsuario']);
+
+// por recolector
+Route::get('/recolectores/{recolector_id}/solicitudes', [\App\Http\Controllers\SolicitudController::class, 'listarPorRecolector']);
+//historiales cambiar estado
+Route::patch('/solicitudes/{recolector_id}/estado', [\App\Http\Controllers\SolicitudController::class, 'cambiarEstado']);
+
+
+/* Route::get('/solicitudes/recolector/{id}', [SolicitudController::class, 'listarPorRecolector']); */
+
+
+Route::apiResource('puntuaciones', \App\Http\Controllers\PuntuacionController::class);
