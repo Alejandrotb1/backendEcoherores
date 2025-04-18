@@ -18,7 +18,7 @@ class RecolectorFactory extends Factory
             'telefono' => $this->faker->phoneNumber(),
             'email' => $this->faker->unique()->safeEmail(),
             'direccion' => $this->faker->address(),
-            'licencia' => $this->faker->bothify('??-####'),
+            'licencia' => $this->faker->randomElement(['A', 'B', 'C', 'P']),
             'estado' => $this->faker->randomElement(['activo', 'inactivo']),
         ];
     }

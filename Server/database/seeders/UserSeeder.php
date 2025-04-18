@@ -10,23 +10,27 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
-        // Crear usuario administrador
+        // Eliminar usuarios existentes
+        User::truncate();
+
+        // Crear usuario admin
         User::create([
-            'role_id' => 1,
-            'name' => 'Admin Principal',
-            'email' => 'admin@ecoheroes.com',
-            'phone' => '555-555-5555',
-            'password' => Hash::make('admin'),
-            'status' => 'active',
-        ]);
-        User::create([
-            'role_id' => 2,
             'name' => 'Admin',
-            'email' => 'admin@ecoheroe7s.com',
-            'phone' => '+15477545447',
-            'password' => Hash::make('123456'),
+            'email' => 'admin@ecoheroes.com',
+            'phone' => '1234567890',
+            'password' => bcrypt('password'),
             'status' => 'active',
+            'role_id' => 1, // ID del rol admin
         ]);
 
+        // Crear segundo usuario admin
+        User::create([
+            'name' => 'Admin 2',
+            'email' => 'admin2@ecoheroes.com',
+            'phone' => '0987654321',
+            'password' => bcrypt('password'),
+            'status' => 'active',
+            'role_id' => 2, // ID del rol user
+        ]);
     }
 }

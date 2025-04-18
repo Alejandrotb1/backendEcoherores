@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\TipoSolicitud;
 use App\Enums\TamanoResiduo;
 use App\Enums\TipoResiduo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Solicitud extends BaseModel
+class Solicitud extends Model
 {
     use HasFactory;
 
@@ -15,19 +17,24 @@ class Solicitud extends BaseModel
     protected $fillable = [
         'usuario_id',
         'recolector_id',
-        'direccion_recojo',
-        'numero_referencia',
-        'detalles_casa',
-        'tipo_material',
-        'detalles_adicionales',
+        'tipo',
+        'descripcion',
+        'direccion',
         'estado',
         'fecha_solicitud',
         'fecha_programada',
         'fecha_recojo',
-        'latitud',
-        'longitud',
-        'tamano_residuo', // Nuevo campo
-        'tipo_residuo',   // Nuevo campo
+        'tamano_residuo',
+        'tipo_residuo'
+    ];
+
+    protected $casts = [
+        'tipo' => TipoSolicitud::class,
+        'tamano_residuo' => TamanoResiduo::class,
+        'tipo_residuo' => TipoResiduo::class,
+        'fecha_solicitud' => 'datetime',
+        'fecha_programada' => 'datetime',
+        'fecha_recojo' => 'datetime',
     ];
 
     // Relaciones

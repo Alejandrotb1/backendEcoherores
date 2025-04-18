@@ -36,8 +36,8 @@ class UserController extends Controller
             'role_id' => 'required|integer',
             'name' => 'required|string|max:45',
             'email' => 'required|email|max:45|unique:users,email',
-            'password' => 'required|string|min:6',
             'phone' => 'required|string|max:45',
+            'password' => 'required|string|min:6',
             'status' => 'required|string|max:45',
         ]);
 

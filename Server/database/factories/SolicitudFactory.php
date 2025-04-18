@@ -21,7 +21,7 @@ class SolicitudFactory extends Factory
             'direccion_recojo' => $this->faker->address,
             'numero_referencia' => $this->faker->buildingNumber,
             'detalles_casa' => $this->faker->sentence(),
-            'tipo_material' => $this->faker->word,
+            'tipo_material' => $this->faker->randomElement(['organico', 'inorganico_reciclable', 'inorganico_no_reciclable', 'peligroso', 'sanitario', 'electronico', 'construccion', 'nuclear']),
             'detalles_adicionales' => $this->faker->paragraph(),
             'estado' => $this->faker->randomElement(['pendiente', 'en_proceso', 'completada']),
             'fecha_solicitud' => $this->faker->dateTimeBetween('-1 month', 'now'),
