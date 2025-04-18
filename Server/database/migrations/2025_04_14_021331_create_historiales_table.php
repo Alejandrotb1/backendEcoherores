@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('historiales', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('usuario_id');   // Relación con el usuario
+            $table->unsignedBigInteger('usuario_id')->nullable();   // Relación con el usuario
             $table->unsignedBigInteger('solicitud_id'); // Relación con la solicitud
             $table->enum('tipo_evento', [
                 'solicitud_creada',
@@ -24,6 +24,8 @@ return new class extends Migration
                 'solicitud_cancelada'
             ]);               // Usamos enum para tipo_evento
             $table->text('detalle');                     // Detalle del evento
+                        $table->string('estado')->default('activo');
+
             $table->timestamp('fecha')->default(now());  // Fecha y hora del evento
             $table->timestamps();                       // created_at y updated_at
 

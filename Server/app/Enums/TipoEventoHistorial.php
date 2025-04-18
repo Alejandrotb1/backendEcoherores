@@ -10,6 +10,9 @@ enum TipoEventoHistorial: string
     case SolicitudCancelada = 'solicitud_cancelada';
     /* case SolicitudRechazada = 'solicitud_rechazada'; */
     case SolicitudReprogramada = 'solicitud_reprogramada';
+
+    case RecolectorAsignado = 'recolector_asignado';
+
 }
 
 

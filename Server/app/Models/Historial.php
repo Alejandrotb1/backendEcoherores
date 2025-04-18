@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\TipoEventoHistoriales;
+use App\Enums\TipoEventoHistorial;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Historial extends BaseModel
@@ -33,7 +33,7 @@ class Historial extends BaseModel
     // Accesor para tipo_evento
     public function setTipoEventoAttribute($value)
     {
-        /* $this->attributes['tipo_evento'] = TipoEventoHistoriales::from($value)->value; */
+        /* $this->attributes['tipo_evento'] = TipoEventoHistorial::from($value)->value; */
         $this->attributes['tipo_evento'] = $value->value;
 
     }
@@ -41,7 +41,7 @@ class Historial extends BaseModel
     // Mutador para tipo_evento
     public function getTipoEventoAttribute($value)
     {
-        return TipoEventoHistoriales::from($value);
+        return TipoEventoHistorial::from($value);
     }
 }
 

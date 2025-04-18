@@ -28,6 +28,7 @@ return new class extends Migration
     'asignada',
     'completada',
     'cancelada',
+    'creada'
 ])->default('pendiente');
 
             $table->timestamp('fecha_solicitud')->useCurrent(); // Fecha de solicitud

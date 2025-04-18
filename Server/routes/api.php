@@ -38,6 +38,12 @@ Route::put('recolectores/{id}/restore', [\App\Http\Controllers\RecolectorControl
 
 
 Route::apiResource('solicitudes', \App\Http\Controllers\SolicitudController::class);
+//editar solicitud para el admin
+Route::patch('solicitudes/{id}/historial/update', [\App\Http\Controllers\SolicitudController::class, 'updateHistorialAdmin']);
+//listar el historial de una solicitud
+Route::get('solicitudes/{id}/historial', [\App\Http\Controllers\SolicitudController::class, 'getHistorial']);
+
+
 // por usuario
 Route::get('/usuarios/{usuario_id}/solicitudes', [\App\Http\Controllers\SolicitudController::class, 'listarPorUsuario']);
 
