@@ -46,7 +46,7 @@ php artisan key:generate
 
 echo "🧱 Ejecutando migraciones..."
 
-php artisan migrate:fresh
+php artisan migrate:fresh --seed
 
 
 echo "🌐 Iniciando servidor Laravel..."

@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends Model
+class User extends Authenticatable
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
 
     // Indica el nombre de la tabla 'usuarios'
 
@@ -20,8 +22,8 @@ class User extends Model
     protected $fillable = [
         'name',
         'email',
-        'phone',
         'password',
+        'phone',
     ];
 
     /**
@@ -31,19 +33,23 @@ class User extends Model
      */
     protected $hidden = [
         'password',
+        'remember_token',
     ];
 
+    /**
+     * Los atributos que deben ser convertidos.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 
     /**
      * Relación muchos a muchos con los roles.
      */
-    public function role()
+    public function roles()
     {
-        return $this->belongsTo(Role::class);
-    }
-    
-    public function entries()
-    {
-        return $this->hasMany(Entry::class)->withTrashed();
-    }
+        return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
+    } 
 }
