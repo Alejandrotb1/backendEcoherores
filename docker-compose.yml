@@ -62,28 +62,28 @@ services:
       ]
 
   # React Frontend (desarrollo)
-  client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
-      target: development
-    container_name: ecoheroes_client
-    restart: unless-stopped
-    volumes:
-      - ./client:/usr/src/app
-      - /usr/src/app/node_modules
-      - /usr/src/app/.vite
-    environment:
-      - NODE_ENV=development
-      - VITE_API_URL=http://server:8000/api
-    ports:
-      - "5173:5173"
-    networks:
-      - ecoheroes_network
-    # depends_on:
-    #   - server
-    stdin_open: true
-    tty: true
+  # client:
+  #   build:
+  #     context: ./client
+  #     dockerfile: Dockerfile
+  #     target: development
+  #   container_name: ecoheroes_client
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./client:/usr/src/app
+  #     - /usr/src/app/node_modules
+  #     - /usr/src/app/.vite
+  #   environment:
+  #     - NODE_ENV=development
+  #     - VITE_API_URL=http://server:8000/api
+  #   ports:
+  #     - "5173:5173"
+  #   networks:
+  #     - ecoheroes_network
+  #   # depends_on:
+  #   #   - server
+  #   stdin_open: true
+  #   tty: true
 
   # # Frontend para producción (opcional)
   # client-prod:
