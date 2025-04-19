@@ -76,7 +76,7 @@ const Map: React.FC<MapProps> = ({ onLocationSelect }) => {
   };
 
   return (
-    <div className="w-full h-full min-h-[500px] relative mt-[1 rem] rounded-lg overflow-hidden shadow-sm bg-white">
+    <div className="size-auto relative mt-[1 rem] rounded-lg overflow-hidden shadow-sm bg-white">
       {loading ? (
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-4 text-green-700 font-medium">
           <div className="w-10 h-10 border-4 border-gray-200 border-t-green-700 rounded-full animate-spin"></div>

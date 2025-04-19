@@ -24,7 +24,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="bg-[#3d3e40] py-4 w-full sticky top-0 z-50 shadow-md">
+    <header className="bg-[#3d3e40] py-4 sm:py-2 w-full sticky top-0 z-50 shadow-md">
       <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
         
         {/* Botón Hamburguesa */}
