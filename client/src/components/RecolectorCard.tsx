@@ -1,15 +1,17 @@
 type RecolectorCardProps = {
   photo?: string;
   name: string;
+  lastName: string;
   ci: string;
   zoneRecolector: string;
   credentialNumber: string;
-  rate: number;
+  rate?: number;
 };
 
 export default function RecolectorCard({
   photo,
   name,
+  lastName,
   ci,
   zoneRecolector,
   credentialNumber,
@@ -31,7 +33,8 @@ export default function RecolectorCard({
         </picture>
       </div>
       <h2 className="sm:text-lg text-base font-bold mt-4 text-white">
-        {name ? name : "Nombre del Recolector"}
+        {name ? name : "Nombre del Recolector"} 
+        {lastName ? lastName : "Apellido del Recolector"}
       </h2>
       <p className="mt-2 text-xs text-white">CI: {ci ? ci : "CI del Recolector"}</p>
       <p className="mt-2 text-xs text-white">
