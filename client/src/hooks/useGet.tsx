@@ -32,4 +32,4 @@ function useGet<T>(url: string): UseGetResult<T> {
   return { data, lastPage };
 }
 
-export default useGet;
+export default useGet; 
