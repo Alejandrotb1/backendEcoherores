@@ -18,8 +18,19 @@ use Illuminate\Support\Facades\Route;
 
 
 
+Route::middleware(['auth:sanctum', 'rol:Admin,Moderator'])->get('/admin-zone', function () {
+    return 'Bienvenido jefe';
+});
+
+// Publica (no requiere autenticación)
+Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
+
+// Protegida con token
+Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
 
+
+///////////////////////////////////////
 
 
 
@@ -28,7 +39,6 @@ Route::resource('usuarios', \App\Http\Controllers\UserController::class);
 // Route::resource('roles', RolController::class);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-
 });
 
 //recolectores
@@ -64,4 +74,3 @@ Route::apiResource('puntuaciones', \App\Http\Controllers\PuntuacionController::c
 //enum
 Route::get('/enums/tipos-residuo', [\App\Http\Controllers\EnumController::class, 'tiposResiduo']);
 Route::get('/enums/tamanos-residuo', [\App\Http\Controllers\EnumController::class, 'tamanosResiduo']);
-

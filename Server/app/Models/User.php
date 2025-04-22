@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Hash;
+
 
 class User extends Authenticatable
 {
@@ -51,5 +53,26 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
-    } 
+    }
+
+    /**
+     * Cifrar la contraseña al crear o actualizar el usuario.
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        // Cifrar la contraseña antes de guardar
+        static::creating(function ($user) {
+            if ($user->password) {
+                $user->password = Hash::make($user->password);
+            }
+        });
+
+        static::updating(function ($user) {
+            if ($user->password) {
+                $user->password = Hash::make($user->password);
+            }
+        });
+    }
 }

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('solicitudes', function (Blueprint $table) {
             $table->id(); // Id de la solicitud
-            $table->unsignedBigInteger('usuario_id'); // Clave foránea a la tabla 'users'
+            $table->unsignedBigInteger('usuario_id')->nullable(); // Clave foránea a la tabla 'users'
             $table->unsignedBigInteger('recolector_id')->nullable(); // Clave foránea a la tabla 'recolectores'
             $table->string('direccion_recojo'); // Dirección del recojo
             $table->string('numero_referencia'); // Número de referencia de la solicitud
@@ -24,12 +24,12 @@ return new class extends Migration
             $table->text('detalles_adicionales')->nullable(); // Detalles adicionales
             /* $table->string('estado_solicitud')->default('pendiente'); // Estado de la solicitud (pendiente, completada, etc.) */
             $table->enum('estado_solicitud', [
-    'pendiente',
-    'asignada',
-    'completada',
-    'cancelada',
-    'creada'
-])->default('pendiente');
+                'pendiente',
+                'asignada',
+                'completada',
+                'cancelada',
+                'creada'
+            ])->default('pendiente');
 
             $table->timestamp('fecha_solicitud')->useCurrent(); // Fecha de solicitud
             $table->timestamp('fecha_programada')->nullable(); // Fecha programada para el recojo
