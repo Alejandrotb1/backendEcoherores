@@ -34,7 +34,7 @@ class SolicitudController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'usuario_id' => 'required|exists:users,id',
+            'usuario_id' => 'nullable|exists:users,id',
             'recolector_id' => 'nullable|exists:recolectores,id', // si no siempre viene, ponelo nullable
             'direccion_recojo' => 'required|string|max:255',
             'numero_referencia' => 'required|string|max:50',
