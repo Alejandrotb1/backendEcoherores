@@ -18,6 +18,8 @@ class Solicitud extends Model
 
     protected $fillable = [
         'usuario_id',
+        'nombre',
+        'carnet',
         'recolector_id',
         'direccion_recojo',
         'numero_referencia',

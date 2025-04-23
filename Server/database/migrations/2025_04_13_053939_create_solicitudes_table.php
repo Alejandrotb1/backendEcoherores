@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('solicitudes', function (Blueprint $table) {
             $table->id(); // Id de la solicitud
-            $table->unsignedBigInteger('usuario_id')->nullable(); // Clave foránea a la tabla 'users'
+            $table->string('nombre'); // nombre de la solicitud
+            $table->string('carnet'); // ci de la solicitud
+            $table->unsignedBigInteger('usuario_id'); // Clave foránea a la tabla 'users'
             $table->unsignedBigInteger('recolector_id')->nullable(); // Clave foránea a la tabla 'recolectores'
             $table->string('direccion_recojo'); // Dirección del recojo
             $table->string('numero_referencia'); // Número de referencia de la solicitud

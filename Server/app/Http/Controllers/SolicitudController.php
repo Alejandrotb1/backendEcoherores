@@ -34,7 +34,9 @@ class SolicitudController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'usuario_id' => 'nullable|exists:users,id',
+            'usuario_id' => 'required|exists:users,id',
+            'nombre' => 'sometimes|exists:name',
+            'carnet' => 'sometimes|exists:ci',
             'recolector_id' => 'nullable|exists:recolectores,id', // si no siempre viene, ponelo nullable
             'direccion_recojo' => 'required|string|max:255',
             'numero_referencia' => 'required|string|max:50',
@@ -131,6 +133,8 @@ class SolicitudController extends Controller
 
     $validator = Validator::make($request->all(), [
         'usuario_id' => 'sometimes|exists:users,id',
+        'nombre' => 'sometimes|exists:name',
+        'carnet' => 'sometimes|exists:ci',
         'direccion_recojo' => 'sometimes|string|max:255',
         'numero_referencia' => 'sometimes|string|max:50',
         'detalles_casa' => 'nullable|string',
@@ -303,6 +307,8 @@ public function updateHistorialAdmin(Request $request, string $id)
     // Validar los datos entrantes
     $validator = Validator::make($request->all(), [
         'usuario_id' => 'sometimes|exists:users,id',
+        'nombre' => 'sometimes|exists:name',
+        'carnet' => 'sometimes|exists:ci',
         'recolector_id' => 'sometimes|exists:recolectores,id',
         'direccion_recojo' => 'sometimes|string|max:255',
         'numero_referencia' => 'sometimes|string|max:50',
