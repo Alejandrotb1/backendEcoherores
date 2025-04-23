@@ -32,7 +32,7 @@ class SolicitudFactory extends Factory
             'usuario_id' => rand(1, 20),
             'nombre' => $this->faker->text,
             'carnet' => $this->faker->text,
-'recolector_id' => rand(1, 50),
+            'recolector_id' => rand(1, 50),
 
             'direccion_recojo' => $this->faker->address,
             'numero_referencia' => $this->faker->uuid,
@@ -45,7 +45,6 @@ class SolicitudFactory extends Factory
                 TipoResiduo::SANITARIO->value,
                 TipoResiduo::ELECTRONICO->value,
                 TipoResiduo::CONSTRUCCION->value,
-                TipoResiduo::NUCLEAR->value,
             ]),
             'detalles_adicionales' => $this->faker->optional()->text,
             /* 'estado_solicitud' => TipoEventoSolicitud::Pendiente->value, // Usamos el Enum */
@@ -69,7 +68,7 @@ class SolicitudFactory extends Factory
                 TipoResiduo::SANITARIO->value,
                 TipoResiduo::ELECTRONICO->value,
                 TipoResiduo::CONSTRUCCION->value,
-                TipoResiduo::NUCLEAR->value
+
             ]),
             'estado' => 'activo', // Valor por defecto
         ];
