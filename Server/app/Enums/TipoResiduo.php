@@ -11,7 +11,6 @@ enum TipoResiduo: string
     case SANITARIO = 'sanitario';
     case ELECTRONICO = 'electronico';
     case CONSTRUCCION = 'construccion';
-    case NUCLEAR = 'nuclear';
 
     public function descripcion(): string
     {
@@ -23,10 +22,9 @@ enum TipoResiduo: string
             self::SANITARIO => 'Residuos sanitarios o biomédicos: Pañales, gasas, jeringas',
             self::ELECTRONICO => 'Residuos electrónicos: Celulares, computadores, electrodomésticos',
             self::CONSTRUCCION => 'Residuos de construcción y demolición: Escombros, ladrillos, concreto, madera',
-            self::NUCLEAR => 'Residuos nucleares: Materiales radiactivos',
         };
     }
 
-    
+
 }
 

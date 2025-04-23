@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('direccion_recojo'); // Dirección del recojo
             $table->string('numero_referencia'); // Número de referencia de la solicitud
             $table->text('detalles_casa'); // Detalles de la casa
-            $table->enum('tipo_material', ['organico', 'inorganico_reciclable', 'inorganico_no_reciclable', 'peligroso', 'sanitario', 'electronico', 'construccion', 'nuclear']); // Tipo de material
+            /* $table->enum('tipo_material', ['organico', 'inorganico_reciclable', 'inorganico_no_reciclable', 'peligroso', 'sanitario', 'electronico', 'construccion', 'nuclear']); // Tipo de material */
             $table->text('detalles_adicionales')->nullable(); // Detalles adicionales
             /* $table->string('estado_solicitud')->default('pendiente'); // Estado de la solicitud (pendiente, completada, etc.) */
             $table->enum('estado_solicitud', [

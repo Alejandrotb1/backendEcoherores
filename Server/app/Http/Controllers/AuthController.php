@@ -1,38 +1,54 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        // Validación de las credenciales
+        // Validar entrada
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        $credentials = $request->only('email', 'password');
+        // Buscar el usuario
+        $user = User::where('email', $request->email)->first();
 
-        // Intentar autenticarse
-        if (!Auth::attempt($credentials)) {
-            return response()->json(['error' => 'Credenciales inválidas'], 401);
+        if (!$user) {
+            return response()->json([
+                'error' => 'El usuario no existe'
+            ], 404);
         }
 
-        $user = Auth::user();
-        // Generar token para la sesión
-        $token = $user->createToken('token_personal')->plainTextToken;
+        // Verificar la contraseña manualmente
+        if (!Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'error' => 'Contraseña incorrecta'
+            ], 401);
+        }
 
-        // Respuesta optimizada
+        /* // Crear token si todo está bien */
+        /* $token = $user->createToken('token_personal')->plainTextToken; */
+
+        // Revocar tokens anteriores
+/* $user->tokens()->delete(); */
+
+// Crear nuevo token
+$token = $user->createToken('token_personal')->plainTextToken;
+
+
         return response()->json([
             'user' => [
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
-                'roles' => $user->roles->pluck('role_name') // Solo los roles, si es necesario
+                'roles' => $user->roles->pluck('role_name') ?? [] // por si no tiene
             ],
             'token' => $token,
         ]);
@@ -40,9 +56,8 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        // Eliminar todos los tokens del usuario para cerrar sesión
         $request->user()->tokens()->delete();
-
         return response()->json(['message' => 'Sesión cerrada']);
     }
 }
+

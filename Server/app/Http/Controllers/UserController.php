@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -9,35 +10,49 @@ class UserController extends Controller
 {
     public function index()
     {
-        $usuarios = Usuario::with('roles')->get();  // Obtener todos los usuarios con sus roles
-        return response()->json($usuarios);
+        return response()->json(User::with('roles')->get());
     }
 
     public function show($id)
     {
-        $usuario = Usuario::with('roles')->findOrFail($id);  // Obtener un usuario por ID con sus roles
-        return response()->json($usuario);
+        return response()->json(User::with('roles')->findOrFail($id));
     }
 
     public function store(Request $request)
     {
-        $usuario = Usuario::create($request->only('nombre', 'email', 'contraseña', 'telefono'));
-        $usuario->roles()->attach($request->roles);  // Asociar roles al usuario
-        return response()->json($usuario, 201);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password, // Se hashea en el modelo
+            'phone' => $request->phone,
+        ]);
+
+        $user->roles()->attach($request->roles);
+
+        return response()->json($user, 201);
     }
 
     public function update(Request $request, $id)
     {
-        $usuario = Usuario::findOrFail($id);
-        $usuario->update($request->only('nombre', 'email', 'contraseña', 'telefono'));
-        $usuario->roles()->sync($request->roles);
-        return response()->json($usuario);
+        $user = User::findOrFail($id);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password, // Solo se rehashea si cambió
+            'phone' => $request->phone,
+        ]);
+
+        $user->roles()->sync($request->roles);
+
+        return response()->json($user);
     }
 
     public function destroy($id)
     {
-        $usuario = Usuario::findOrFail($id);
-        $usuario->delete();
+        $user = User::findOrFail($id);
+        $user->delete();
         return response()->json(null, 204);
     }
 }
+

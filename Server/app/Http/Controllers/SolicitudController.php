@@ -16,6 +16,23 @@ use App\Enums\TipoEventoSolicitud;
 
 class SolicitudController extends Controller
 {
+
+
+    public function __construct()
+{
+// Métodos que NO requieren autenticación
+    $this->middleware('guest')->only(['show', 'listarPorUsuario']);
+
+    // Métodos que requieren estar logueado
+    $this->middleware('auth:sanctum')->only(['update']);
+
+    // Métodos que requieren ser admin o moderador
+    $this->middleware(['auth:sanctum', 'isAdminOrModerator'])->except(['store', 'show', 'listarPorUsuario','update']);
+}
+
+
+
+
     /**
      * Display a listing of the resource.
      */
@@ -40,7 +57,7 @@ class SolicitudController extends Controller
             'direccion_recojo' => 'required|string|max:255',
             'numero_referencia' => 'required|string|max:50',
             'detalles_casa' => 'nullable|string',
-            'tipo_material' => 'required|string|max:255',
+            /* 'tipo_material' => 'required|string|max:255', */
             'detalles_adicionales' => 'nullable|string',
             'estado_solicitud' => [
                 'nullable', // o 'required' si querés que lo manden siempre
@@ -60,7 +77,6 @@ class SolicitudController extends Controller
                 Rule::in(collect(TipoResiduo::cases())->pluck('value'))
             ],
         ]);
-
         if ($validator->fails()) {
             return response()->json([
                 'errors' => $validator->errors(),
@@ -72,6 +88,11 @@ class SolicitudController extends Controller
 
         $data = $validator->validated();
 
+           $user = Auth::guard('sanctum')->user();
+    if ($user) {
+        $data['usuario_id'] = $user->id;
+    }
+
         // Si no vino el estado, lo seteamos a pendiente por defecto
         $data['estado_solicitud'] ??= TipoEventoSolicitud::Creada->value;
 
@@ -81,7 +102,9 @@ class SolicitudController extends Controller
         Historial::create([
             /* 'usuario_id'    => $data['usuario_id'], */
             /*     'usuario_id'   => auth()->id(), // quien está logueado y creó la solicitud (operador o el mismo user) */
-            'usuario_id'   => 1,
+
+            'usuario_id'   => $user?->id,
+
             'solicitud_id'  => $solicitud->id,
             'tipo_evento'   => TipoEventoHistorial::SolicitudCreada, // Enum
             'detalle'       => 'La solicitud fue creada.',
@@ -133,11 +156,11 @@ class SolicitudController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'usuario_id' => 'sometimes|exists:users,id',
+            /* 'usuario_id' => 'sometimes|exists:users,id', */
             'direccion_recojo' => 'sometimes|string|max:255',
             'numero_referencia' => 'sometimes|string|max:50',
             'detalles_casa' => 'nullable|string',
-            'tipo_material' => 'sometimes|string|max:255',
+            /* 'tipo_material' => 'sometimes|string|max:255', */
             'detalles_adicionales' => 'nullable|string',
             'latitud' => 'sometimes|numeric',
             'longitud' => 'sometimes|numeric',
@@ -211,7 +234,7 @@ class SolicitudController extends Controller
         // Si no hay solicitudes, devolver mensaje de "Usuario no encontrado"
         if ($solicitudes->isEmpty()) {
             return response()->json([
-                'message' => 'Usuario no encontrado'
+                'message' => 'el Usuario no tiene solicitudes'
             ], 404); // 404 Not Found
         }
 
@@ -310,7 +333,7 @@ class SolicitudController extends Controller
             'direccion_recojo' => 'sometimes|string|max:255',
             'numero_referencia' => 'sometimes|string|max:50',
             'detalles_casa' => 'nullable|string',
-            'tipo_material' => 'sometimes|string|max:255',
+            /* 'tipo_material' => 'sometimes|string|max:255', */
             'detalles_adicionales' => 'nullable|string',
             'estado_solicitud' => [
                 'sometimes',
@@ -340,6 +363,13 @@ class SolicitudController extends Controller
 
         $data = $validator->validated();
 
+            $user = Auth::guard('sanctum')->user();
+    if ($user) {
+        // Esto sobreescribe cualquier usuario_id que haya mandado el cliente
+        $data['usuario_id'] = $user->id;
+    }
+
+
         // Guardar los valores originales para comparar después
         $original = $solicitud->only(array_keys($data));
 
@@ -349,19 +379,47 @@ class SolicitudController extends Controller
 
         // Detectar cambios
         $cambios = [];
-        foreach ($data as $key => $nuevoValor) {
-            $valorAnterior = $original[$key] ?? null;
-            if ($valorAnterior != $nuevoValor) {
-                $cambios[] = "$key: '$valorAnterior' → '$nuevoValor'";
-            }
-        }
+
+
+
+
+
+
+        /* foreach ($data as $key => $nuevoValor) { */
+        /*     $valorAnterior = $original[$key] ?? null; */
+        /*     if ($valorAnterior != $nuevoValor) { */
+        /*         $cambios[] = "$key: '$valorAnterior' → '$nuevoValor'"; */
+        /*     } */
+        /* } */
+
+        function stringify($valor) {
+    if (is_null($valor)) return 'null';
+    if (is_bool($valor)) return $valor ? 'true' : 'false';
+    if (is_object($valor)) {
+        if (method_exists($valor, '__toString')) return (string) $valor;
+        if (method_exists($valor, 'value')) return $valor->value;
+        return get_class($valor); // fallback: nombre de clase
+    }
+    if (is_array($valor)) return json_encode($valor);
+    return (string) $valor;
+}
+
+$cambios = [];
+
+foreach ($data as $key => $nuevoValor) {
+    $valorAnterior = $original[$key] ?? null;
+    if ($valorAnterior != $nuevoValor) {
+        $cambios[] = "$key: '" . stringify($valorAnterior) . "' → '" . stringify($nuevoValor) . "'";
+    }
+}
+
 
         // Solo guardar historial si hubo cambios
         if (count($cambios)) {
             Historial::create([
-                'usuario_id'   => 1, // En el futuro: auth()->id()
+                'usuario_id'   =>  $user?->id,
                 'solicitud_id' => $solicitud->id,
-                'tipo_evento'  => TipoEventoHistorial::SolicitudAsignada, // o algún otro según lógica
+                'tipo_evento'  => TipoEventoHistorial::SolicitudAsignada->value, // o algún otro según lógica
                 'detalle'      => 'Cambios realizados: ' . implode('; ', $cambios),
                 'fecha'        => now(),
             ]);

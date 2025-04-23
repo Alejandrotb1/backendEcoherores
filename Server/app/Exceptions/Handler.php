@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Exceptions;
+namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Auth\AuthenticationException;
 
 class Handler extends ExceptionHandler
 {
@@ -47,4 +49,25 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    /**
+     * Handle an unauthenticated exception.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Auth\AuthenticationException  $exception
+     * @return \Illuminate\Http\Response
+     */
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        // Verifica si la solicitud espera JSON (API)
+        if ($request->expectsJson()) {
+            // Devuelve una respuesta JSON con código 401 (No autorizado)
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+   return response()->json(['error' => 'No autenticado HANDLER'], 401);
+        // Si no es JSON, puedes redirigir a la página de login (si es una interfaz de usuario)
+        // Si prefieres no hacer redirección, simplemente puedes devolver algún mensaje o vista.
+        // return redirect()->route('login');  // Omitir si no lo necesitas
+    }
 }
+

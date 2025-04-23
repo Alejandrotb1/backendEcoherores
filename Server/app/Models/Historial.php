@@ -34,7 +34,13 @@ class Historial extends BaseModel
     public function setTipoEventoAttribute($value)
     {
         /* $this->attributes['tipo_evento'] = TipoEventoHistorial::from($value)->value; */
+        /* $this->attributes['tipo_evento'] = $value->value; */
+
+            if ($value instanceof \App\Enums\TipoEventoHistorial) {
         $this->attributes['tipo_evento'] = $value->value;
+    } else {
+        $this->attributes['tipo_evento'] = $value; // ya es string
+    }
 
     }
 

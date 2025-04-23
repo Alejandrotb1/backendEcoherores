@@ -21,7 +21,7 @@ class Solicitud extends BaseModel
         'direccion_recojo',
         'numero_referencia',
         'detalles_casa',
-        'tipo_material',
+        /* 'tipo_material', */
         'detalles_adicionales',
         'estado_solicitud',
         'fecha_solicitud',
