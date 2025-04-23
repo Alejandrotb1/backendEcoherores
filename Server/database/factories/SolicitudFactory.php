@@ -30,6 +30,8 @@ class SolicitudFactory extends Factory
             /* 'usuario_id' => User::factory(), // Crea un usuario aleatorio */
             /* 'recolector_id' => Recolector::factory(), // Crea un recolector aleatorio */
             'usuario_id' => rand(1, 20),
+            'nombre' => $this->faker->text,
+            'carnet' => $this->faker->text,
 'recolector_id' => rand(1, 50),
 
             'direccion_recojo' => $this->faker->address,

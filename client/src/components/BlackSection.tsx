@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import groupImage from '/image/Group1.webp';
+import groupImage from '../../public/image/Group1.webp';
 
 const BlackSection = () => {
   return (
     <section className="w-full min-w-full bg-black text-white py-24">
-      <div className="flex flex-col md:flex-row items-start px-8 max-w-7xl">
-        <div className="w-full md:w-1/3 md:pr-4 -mt-8 pl-16">
-          <img src={groupImage} alt="Ilustración" className="w-full h-auto max-w-[220px]" />
+      <div className="flex flex-col md:flex-row items-start px-4 md:px-8 max-w-7xl">
+        <div className="w-full md:w-1/3 md:pr-4 -mt-8 md:pl-16">
+          <img src={groupImage} alt="Ilustración" className="w-full h-auto max-w-[220px] mx-auto md:mx-0" />
         </div>
-        <div className="w-full md:w-2/3 md:pl-0 -ml-8">
+        <div className="w-full md:w-2/3 md:pl-0 -ml-3 pl-8 pr-4 md:px-0">
           <h2 className="text-5xl font-bold mb-6">Como usar la web</h2>
           <p className="text-lg mb-4">Solicitar un Recolector</p>
           <ul className="list-none space-y-2 text-gray-400 text-sm mb-8">
