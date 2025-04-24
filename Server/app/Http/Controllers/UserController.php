@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,10 +12,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('Users.Index', [
-            'users' => $users,
-        ]);
+        return response()->json(User::with('roles')->get());
     }
 
     /**
@@ -22,8 +20,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::all();
-        return view('Users.Create', compact('roles'));
+        return response()->json(User::with('roles')->findOrFail($id));
     }
 
     /**
@@ -31,21 +28,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'role_id' => 'required|integer',
-            'name' => 'required|string|max:45',
-            'email' => 'required|email|max:45|unique:users,email',
-            'phone' => 'required|string|max:45',
-            'password' => 'required|string|min:6',
-            'status' => 'required|string|max:45',
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password, // Se hashea en el modelo
+            'phone' => $request->phone,
         ]);
 
-        $validatedData['password'] = bcrypt($validatedData['password']);
+        $user->roles()->attach($request->roles);
 
-        $user = User::create($validatedData);
-
-        return redirect()->route('users.index')
-                         ->with('success', 'Usuario creado exitosamente');
+        return response()->json($user, 201);
     }
 
     /**
@@ -53,10 +45,18 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $usuario = Usuario::findOrFail($id);
-        $usuario->update($request->only('nombre', 'email', 'contraseña', 'telefono'));
-        $usuario->roles()->sync($request->roles);
-        return response()->json($usuario);
+        $user = User::findOrFail($id);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password, // Solo se rehashea si cambió
+            'phone' => $request->phone,
+        ]);
+
+        $user->roles()->sync($request->roles);
+
+        return response()->json($user);
     }
 
     /**
@@ -65,39 +65,8 @@ class UserController extends Controller
     public function edit(string $id)
     {
         $user = User::findOrFail($id);
-        $roles = Role::all();
-        return view('Users.Edit', compact('user', 'roles'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        $validatedData = $request->validate([
-            'role_id' => 'required|integer',
-            'name' => 'required|string|max:45',
-            'email' => 'required|email|max:45|unique:users,email',
-            'phone' => 'required|string|max:45',
-            'password' => 'required|string|min:6',
-            'status' => 'required|string|max:45',
-        ]);
-
-        $user = User::findOrFail($id);
-        $user->update($validatedData);
-
-        return redirect()->route('users.index')->with('success', 'Usuario actualizado exitosamente');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        $user = User::findOrFail($id);
         $user->delete();
-
-        return redirect()->route('users.index')
-                         ->with('success', 'Usuario eliminado exitosamente');
+        return response()->json(null, 204);
     }
 }
+

@@ -18,10 +18,12 @@ return new class extends Migration
             $table->unsignedBigInteger('usuario_id')->nullable();   // Relación con el usuario
             $table->unsignedBigInteger('solicitud_id'); // Relación con la solicitud
             $table->enum('tipo_evento', [
-                'solicitud_creada',
-                'solicitud_asignada',
-                'solicitud_completada',
-                'solicitud_cancelada'
+
+                'pendiente',
+                'asignada',
+                'completada',
+                'cancelada',
+                'creada'
             ]);               // Usamos enum para tipo_evento
             $table->text('detalle');                     // Detalle del evento
                         $table->string('estado')->default('activo');

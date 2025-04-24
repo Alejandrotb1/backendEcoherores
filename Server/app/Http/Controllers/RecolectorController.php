@@ -9,6 +9,16 @@ use Illuminate\Validation\Rule;
 
 class RecolectorController extends Controller
 {
+
+    public function __construct()
+{
+    // Solo pedimos autenticación para todos los métodos excepto 'index'
+    $this->middleware('auth:sanctum')->except(['index']);
+
+    // Y de paso, solo admins o moderadores pueden usar los demás métodos (excepto index)
+    $this->middleware('isAdminOrModerator')->except(['index']);
+}
+
     /**
      * Display a listing of the resource.
      */
@@ -118,6 +128,7 @@ class RecolectorController extends Controller
             $recolector = Recolector::findOrFail($id);
 
             $validator = Validator::make($request->all(), [
+                
                 'nombre' => 'sometimes|string|max:255',
                 'apellido' => 'sometimes|string|max:255',
                 'ci' => ['sometimes', 'string', Rule::unique('recolectores')->ignore($id)],
@@ -225,16 +236,16 @@ class RecolectorController extends Controller
         }
     }
     //solicitudes de cada recolector
-    public function listarPorRecolector($recolectorId)
-{
-    $solicitudes = Solicitud::where('recolector_id', $recolectorId)
-        ->orderBy('fecha_programada', 'desc')
-        ->get();
-
-    return response()->json([
-        'data' => $solicitudes,
-        'message' => 'Solicitudes del recolector obtenidas exitosamente'
-    ]);
-}
-
+/*     public function listarPorRecolector($recolectorId) */
+/* { */
+/*     $solicitudes = Solicitud::where('recolector_id', $recolectorId) */
+/*         ->orderBy('fecha_programada', 'desc') */
+/*         ->get(); */
+/**/
+/*     return response()->json([ */
+/*         'data' => $solicitudes, */
+/*         'message' => 'Solicitudes del recolector obtenidas exitosamente' */
+/*     ]); */
+/* } */
+/**/
 }

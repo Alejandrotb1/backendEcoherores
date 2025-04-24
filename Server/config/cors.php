@@ -19,6 +19,8 @@ return [
 
     'allowed_methods' => ['*'],
 
+
+    /* https://dbdiagram.io/d/6807fc9d1ca52373f5f194b3 */
     'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],

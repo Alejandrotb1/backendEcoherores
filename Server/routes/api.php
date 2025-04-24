@@ -14,12 +14,26 @@ Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edi
 Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
 
 
 
+Route::middleware(['auth:sanctum', 'rol:Admin,Moderator'])->get('/admin-zone', function () {
+    return 'Bienvenido jefe';
+});
+
+// Publica (no requiere autenticación)
+Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
+
+// Protegida con token
+Route::middleware('auth:sanctum')->post('/logout', [\App\Http\Controllers\AuthController::class, 'logout']);
 
 
+
+///////////////////////////////////////
 
 
 
@@ -28,7 +42,6 @@ Route::resource('usuarios', \App\Http\Controllers\UserController::class);
 // Route::resource('roles', RolController::class);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-
 });
 
 //recolectores
@@ -58,3 +71,10 @@ Route::patch('/solicitudes/{recolector_id}/estado', [\App\Http\Controllers\Solic
 
 
 Route::apiResource('puntuaciones', \App\Http\Controllers\PuntuacionController::class);
+
+
+
+
+//enum
+Route::get('/enums/tipos-residuo', [\App\Http\Controllers\EnumController::class, 'tiposResiduo']);
+Route::get('/enums/tamanos-residuo', [\App\Http\Controllers\EnumController::class, 'tamanosResiduo']);
