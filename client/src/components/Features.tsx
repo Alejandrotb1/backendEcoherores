@@ -4,13 +4,13 @@ const Features = () => {
   return (
     <section className="w-full min-w-full bg-black text-white py-16">
       <div className="max-w-7xl mx-auto px-8 grid place-items-center">
-      <div className="w-full md:w-1/2 px-4 md:px-16 relative">
+      {/* <div className="w-full md:w-1/2 px-4 md:px-16 relative">
           <img 
             src="/image/cabezaEcoHeroes.webp"
             alt="EcoHeroes" 
             className="w-[90dvh] sm:hidden"
           />
-        </div>
+        </div> */}
         <div className="text-center mb-16 sm:w-1/2">
           <h2 className="text-4xl font-bold mb-6">EcoHéroe</h2>
           <p className="text-lg max-w-3xl mx-auto">

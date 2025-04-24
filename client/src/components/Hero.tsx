@@ -15,13 +15,13 @@ const Hero = () => {
             Iniciar Sesión
           </button>
         </div>
-         {/* <div className="w-full md:w-1/2 px-4 md:px-16 relative">
+         <div className="w-full md:w-1/2 px-4 md:px-16 relative">
          <img 
             src="/image/cabezaEcoHeroes.webp"
             alt="EcoHeroes" 
             className="w-[80%] max-md:hidden absolute left-10 -top-30 mr-6"
           />
-        </div> */}
+        </div>
       </div>
     </section>
   );

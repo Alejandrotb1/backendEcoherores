@@ -128,13 +128,13 @@ const RecojoForm: React.FC<RecojoFormProps> = ({ onSubmit, address }) => {
             className="p-4 border-2 border-gray-300 rounded-xl bg-gray-100 text-sm w-full text-gray-800 appearance-none focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-400"
             style={{ backgroundImage: "url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%234A5568%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27/%3e%3c/svg%3e')", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1.5em' }}
           >
+            <option value="organico">Residuos Organicos</option>
+            <option value="inorganico_reciclable">Residuos Inorgánicos Reciclables</option>
+            <option value="inorganico_no_reciclable">Residuos Inorgánicos No Reciclables</option>
             <option value="peligroso">Residuos Peligrosos</option>
-            <option value="electrico">Residuos Eléctricos y Electrónicos</option>
-            <option value="vidrio">Vidrio</option>
-            <option value="metales">Metales</option>
-            <option value="papel">Papel y Cartón</option>
-            <option value="plasticos">Plásticos</option>
-            <option value="organico">Materia Orgánica</option>
+            <option value="sanitario">Residuos Sanitarios</option>
+            <option value="electronico">Residuos Electrónicos</option>
+            <option value="construccion">Residuos de Construcción</option>
           </select>
         </div>
 
