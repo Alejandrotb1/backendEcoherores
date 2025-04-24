@@ -19,6 +19,7 @@ class RecolectorFactory extends Factory
             'email' => $this->faker->unique()->safeEmail,
             'direccion' => $this->faker->address,
             'licencia' => $this->faker->randomElement(['A', 'B', 'C', 'P', null]),
+            'foto_url' => 'https://tu-servicio-de-almacenamiento.com/path/default.jpg',
             'estado' => $this->faker->randomElement(['activo', 'inactivo']),
         ];
     }

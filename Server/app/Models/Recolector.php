@@ -11,6 +11,7 @@ class Recolector extends BaseModel
     protected $table = 'recolectores';
 
     protected $fillable = [
+        'id',
         'nombre',
         'apellido',
         'ci',

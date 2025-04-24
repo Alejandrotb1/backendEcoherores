@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('email')->unique()->nullable(); // puede añadirse luego
             $table->string('direccion')->nullable(); // se puede añadir luego
             $table->enum('licencia', ['A', 'B', 'C', 'P', 'M','T'])->nullable(); // enum y opcional
+            $table->string('foto_url')->nullable();
             $table->string('estado')->default('activo');
             $table->timestamps();
         });

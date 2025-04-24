@@ -52,6 +52,8 @@ class SolicitudController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'usuario_id' => 'nullable|exists:users,id',
+            'nombre' => 'required|string|max:255', 
+            'carnet' => 'required|string|max:20',
             'recolector_id' => 'nullable|exists:recolectores,id', // si no siempre viene, ponelo nullable
             'direccion_recojo' => 'required|string|max:255',
             'numero_referencia' => 'required|string|max:50',
@@ -103,7 +105,6 @@ class SolicitudController extends Controller
             /*     'usuario_id'   => auth()->id(), // quien está logueado y creó la solicitud (operador o el mismo user) */
 
             'usuario_id'   => $user?->id,
-
             'solicitud_id'  => $solicitud->id,
             'tipo_evento'   => TipoEventoSolicitud::Creada, // Enum
             'detalle'       => 'La solicitud fue creada.',
@@ -327,6 +328,8 @@ class SolicitudController extends Controller
         // Validar los datos entrantes
         $validator = Validator::make($request->all(), [
             'usuario_id' => 'sometimes|exists:users,id',
+            'nombre' => 'required|string|max:255', 
+            'carnet' => 'required|string|max:20',
             'recolector_id' => 'sometimes|exists:recolectores,id',
             'direccion_recojo' => 'sometimes|string|max:255',
             'numero_referencia' => 'sometimes|string|max:50',

@@ -128,6 +128,7 @@ class RecolectorController extends Controller
             $recolector = Recolector::findOrFail($id);
 
             $validator = Validator::make($request->all(), [
+                
                 'nombre' => 'sometimes|string|max:255',
                 'apellido' => 'sometimes|string|max:255',
                 'ci' => ['sometimes', 'string', Rule::unique('recolectores')->ignore($id)],

@@ -9,6 +9,7 @@ use App\Enums\TipoResiduo;
 use App\Enums\TamanoResiduo;
 use App\Enums\TipoEventoSolicitud;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
 
 class SolicitudFactory extends Factory
 {
@@ -16,8 +17,7 @@ class SolicitudFactory extends Factory
 
     public function definition(): array
     {
-
-             // Probabilidad de que el estado sea pendiente (80%)
+        // Probabilidad de que el estado sea pendiente (80%)
         $estadoSolicitud = $this->faker->boolean(80)
             ? TipoEventoSolicitud::Pendiente->value
             : $this->faker->randomElement([
@@ -37,7 +37,7 @@ class SolicitudFactory extends Factory
             'direccion_recojo' => $this->faker->address,
             'numero_referencia' => $this->faker->uuid,
             'detalles_casa' => $this->faker->paragraph,
-            /* 'tipo_material' => $this->faker->randomElement([ */
+              /* 'tipo_material' => $this->faker->randomElement([ */
             /*     TipoResiduo::ORGANICO->value, */
             /*     TipoResiduo::INORGANICO_RECICLABLE->value, */
             /*     TipoResiduo::INORGANICO_NO_RECICLABLE->value, */
@@ -49,9 +49,9 @@ class SolicitudFactory extends Factory
             /* ]), */
             'detalles_adicionales' => $this->faker->optional()->text,
             /* 'estado_solicitud' => TipoEventoSolicitud::Pendiente->value, // Usamos el Enum */
-                        'estado_solicitud' => $estadoSolicitud, // Usamos la probabilidad definida
+            'estado_solicitud' => $estadoSolicitud, // Usamos la probabilidad definida
 
-            'fecha_solicitud' => now(),
+            'fecha_solicitud' => Carbon::now(),
             'fecha_programada' => $this->faker->optional()->dateTime,
             'fecha_recojo' => $this->faker->optional()->dateTime,
             'latitud' => $this->faker->latitude,
