@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import groupImage from '../assets/Group 1.png';
+import groupImage from '../../public/image/Group1.webp';
 
 const BlackSection = () => {
   return (

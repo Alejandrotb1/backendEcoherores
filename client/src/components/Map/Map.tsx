@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import styles from './Map.module.css';
 import locationIcon from '../../assets/icons/location-marker.svg';
 
 // Configuración del ícono para la ubicación actual
@@ -11,7 +10,7 @@ const currentLocationIcon = new L.Icon({
   iconSize: [32, 32],
   iconAnchor: [16, 32],
   popupAnchor: [0, -32],
-  className: styles.pulsingIcon
+  className: "animate-pulse"
 });
 
 // Configuración del ícono para el punto de recolección
@@ -20,15 +19,8 @@ const pickupLocationIcon = new L.Icon({
   iconSize: [32, 32],
   iconAnchor: [16, 32],
   popupAnchor: [0, -32],
-  className: styles.pickupIcon
+  className: "opacity-90 filter hue-rotate-200"
 });
-
-// Componente para actualizar la vista del mapa
-function ChangeView({ center }: { center: [number, number] }) {
-  const map = useMap();
-  map.setView(center);
-  return null;
-}
 
 // Componente para manejar los clics en el mapa
 function MapClickHandler({ onLocationSelect }: { onLocationSelect: (latlng: [number, number]) => void }) {
@@ -53,7 +45,7 @@ const Map: React.FC<MapProps> = ({ onLocationSelect }) => {
 
   useEffect(() => {
     if ('geolocation' in navigator) {
-      const watchId = navigator.geolocation.watchPosition(
+      navigator.geolocation.getCurrentPosition(
         (location) => {
           setCurrentPosition([location.coords.latitude, location.coords.longitude]);
           setAccuracy(location.coords.accuracy);
@@ -70,8 +62,6 @@ const Map: React.FC<MapProps> = ({ onLocationSelect }) => {
           maximumAge: 0
         }
       );
-
-      return () => navigator.geolocation.clearWatch(watchId);
     } else {
       setError('Tu navegador no soporta geolocalización');
       setLoading(false);
@@ -86,46 +76,38 @@ const Map: React.FC<MapProps> = ({ onLocationSelect }) => {
   };
 
   return (
-    <div className={styles.mapContainer}>
+    <div className="size-auto relative mt-[1 rem] rounded-lg overflow-hidden shadow-sm bg-white">
       {loading ? (
-        <div className={styles.loading}>
-          <div className={styles.loadingSpinner}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-4 text-green-700 font-medium">
+          <div className="w-10 h-10 border-4 border-gray-200 border-t-green-700 rounded-full animate-spin"></div>
           Obteniendo tu ubicación...
         </div>
       ) : error ? (
-        <div className={styles.error}>{error}</div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-4 text-red-600 font-medium">
+          {error}
+        </div>
       ) : (
         <>
-          <div className={styles.instructions}>
+          <div className="absolute top-[-30px] left-0 w-full text-center text-green-700 text-sm z-10">
             Haz clic en el mapa para seleccionar el punto de recolección
           </div>
-          <MapContainer center={currentPosition} zoom={15} className={styles.map}>
-            <ChangeView center={currentPosition} />
+          <MapContainer 
+            center={currentPosition} 
+            zoom={15} 
+            className="w-full h-full min-h-[500px] rounded-sm z-0"
+          >
             <MapClickHandler onLocationSelect={handleLocationSelect} />
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             />
-            {/* Marcador de la ubicación actual */}
-            <Marker position={currentPosition} icon={currentLocationIcon}>
-              <Popup>
-                <div className={styles.popup}>
-                  <strong>Tu ubicación actual</strong>
-                  {accuracy && (
-                    <p className={styles.accuracy}>
-                      Precisión: ±{Math.round(accuracy)} metros
-                    </p>
-                  )}
-                </div>
-              </Popup>
-            </Marker>
             {/* Marcador del punto seleccionado */}
             {selectedPosition && (
               <Marker position={selectedPosition} icon={pickupLocationIcon}>
                 <Popup>
-                  <div className={styles.popup}>
-                    <strong>Punto de recolección</strong>
-                    <p className={styles.coordinates}>
+                  <div className="text-center">
+                    <strong className="block mb-2 text-green-700">Punto de recolección</strong>
+                    <p className="text-sm text-gray-600 my-1">
                       Lat: {selectedPosition[0].toFixed(6)}<br />
                       Lng: {selectedPosition[1].toFixed(6)}
                     </p>
