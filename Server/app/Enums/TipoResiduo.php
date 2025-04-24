@@ -25,6 +25,6 @@ enum TipoResiduo: string
         };
     }
 
-    
+
 }
 

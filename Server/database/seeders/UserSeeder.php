@@ -15,7 +15,9 @@ class UserSeeder extends Seeder
         $user = User::create([
             'name' => 'Admin Principal',
             'email' => 'admin@ecoheroes.com',
-            'password' => Hash::make('password'),
+            /* 'password' => Hash::make('password'), */
+            'password' => 'password',
+
             'phone' => '+15316166843',
         ]);
 

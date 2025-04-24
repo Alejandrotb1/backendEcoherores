@@ -37,15 +37,16 @@ class SolicitudFactory extends Factory
             'direccion_recojo' => $this->faker->address,
             'numero_referencia' => $this->faker->uuid,
             'detalles_casa' => $this->faker->paragraph,
-            'tipo_material' => $this->faker->randomElement([
-                TipoResiduo::ORGANICO->value,
-                TipoResiduo::INORGANICO_RECICLABLE->value,
-                TipoResiduo::INORGANICO_NO_RECICLABLE->value,
-                TipoResiduo::PELIGROSO->value,
-                TipoResiduo::SANITARIO->value,
-                TipoResiduo::ELECTRONICO->value,
-                TipoResiduo::CONSTRUCCION->value,
-            ]),
+            /* 'tipo_material' => $this->faker->randomElement([ */
+            /*     TipoResiduo::ORGANICO->value, */
+            /*     TipoResiduo::INORGANICO_RECICLABLE->value, */
+            /*     TipoResiduo::INORGANICO_NO_RECICLABLE->value, */
+            /*     TipoResiduo::PELIGROSO->value, */
+            /*     TipoResiduo::SANITARIO->value, */
+            /*     TipoResiduo::ELECTRONICO->value, */
+            /*     TipoResiduo::CONSTRUCCION->value, */
+            /*     TipoResiduo::NUCLEAR->value, */
+            /* ]), */
             'detalles_adicionales' => $this->faker->optional()->text,
             /* 'estado_solicitud' => TipoEventoSolicitud::Pendiente->value, // Usamos el Enum */
                         'estado_solicitud' => $estadoSolicitud, // Usamos la probabilidad definida
@@ -68,7 +69,6 @@ class SolicitudFactory extends Factory
                 TipoResiduo::SANITARIO->value,
                 TipoResiduo::ELECTRONICO->value,
                 TipoResiduo::CONSTRUCCION->value,
-
             ]),
             'estado' => 'activo', // Valor por defecto
         ];

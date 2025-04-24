@@ -45,9 +45,9 @@ echo "🔑 Generando clave de aplicación..."
 php artisan key:generate 
 
 echo "🧱 Ejecutando migraciones..."
-
-php artisan migrate:fresh --seed
-
+# php artisan config:clear
+# php artisan cache:clear
+php artisan migrate:fresh --seed --force
 
 echo "🌐 Iniciando servidor Laravel..."
 php artisan serve --host=0.0.0.0 --port=8000
