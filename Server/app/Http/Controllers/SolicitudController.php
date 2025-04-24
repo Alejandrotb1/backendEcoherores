@@ -106,7 +106,7 @@ class SolicitudController extends Controller
             'usuario_id'   => $user?->id,
 
             'solicitud_id'  => $solicitud->id,
-            'tipo_evento'   => TipoEventoHistorial::SolicitudCreada, // Enum
+            'tipo_evento'   => TipoEventoSolicitud::Creada, // Enum
             'detalle'       => 'La solicitud fue creada.',
             'fecha'         => now(),
         ]);
@@ -415,11 +415,14 @@ foreach ($data as $key => $nuevoValor) {
 
 
         // Solo guardar historial si hubo cambios
-        if (count($cambios)) {
+if (count($cambios)) {
+
+                    $tipoEvento = TipoEventoSolicitud::from($data['estado_solicitud'])->value;
+
             Historial::create([
                 'usuario_id'   =>  $user?->id,
                 'solicitud_id' => $solicitud->id,
-                'tipo_evento'  => TipoEventoHistorial::SolicitudAsignada->value, // o algún otro según lógica
+                'tipo_evento'  => $tipoEvento,
                 'detalle'      => 'Cambios realizados: ' . implode('; ', $cambios),
                 'fecha'        => now(),
             ]);

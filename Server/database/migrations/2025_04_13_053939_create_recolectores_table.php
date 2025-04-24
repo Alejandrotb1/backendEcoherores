@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('telefono')->nullable();
             $table->string('email')->unique()->nullable(); // puede añadirse luego
             $table->string('direccion')->nullable(); // se puede añadir luego
-            $table->enum('licencia', ['A', 'B', 'C', 'P'])->nullable(); // enum y opcional
+            $table->enum('licencia', ['A', 'B', 'C', 'P', 'M','T'])->nullable(); // enum y opcional
             $table->string('estado')->default('activo');
             $table->timestamps();
         });

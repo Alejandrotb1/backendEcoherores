@@ -29,7 +29,7 @@ return new class extends Migration
                 'completada',
                 'cancelada',
                 'creada'
-            ])->default('pendiente');
+            ])->default('creada');
 
             $table->timestamp('fecha_solicitud')->useCurrent(); // Fecha de solicitud
             $table->timestamp('fecha_programada')->nullable(); // Fecha programada para el recojo
