@@ -10,7 +10,7 @@ const RecojoForm: React.FC<RecojoFormProps> = ({ onSubmit, address }) => {
   const [formData, setFormData] = useState<RecojoFormData & { carnet: string; nombreCompleto: string }>({
     direccion: address,
     detallesCasa: '',
-    tipoResiduo: 'orgánico',
+    tipoResiduo: 'organico',
     tamañoResiduo: 'pequeño',
     referencia: '',
     carnet: '',
