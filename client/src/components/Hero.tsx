@@ -1,6 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate('/login');
+  };
+
   return (
     <section className="w-screen bg-white py-16">
       <div className="flex flex-col md:flex-row justify-between items-center">
@@ -11,7 +18,10 @@ const Hero = () => {
           <p className="text-xl text-gray-600 mb-8">
             ¡Conviértete en un EcoHéroe!
           </p>
-          <button className="!bg-green-500 hover:bg-green-600 text-white px-8 py-2 rounded">
+          <button 
+            onClick={handleLogin}
+            className="!bg-green-500 hover:bg-green-600 text-white px-8 py-2 rounded"
+          >
             Iniciar Sesión
           </button>
         </div>

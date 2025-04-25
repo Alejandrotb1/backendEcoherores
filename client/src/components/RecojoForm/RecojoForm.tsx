@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { RecojoFormData } from '../../types/recojoTypes';
+import Swal from 'sweetalert2';
 
 interface RecojoFormProps {
   onSubmit: (data: RecojoFormData) => void;
@@ -7,7 +8,7 @@ interface RecojoFormProps {
 }
 
 const RecojoForm: React.FC<RecojoFormProps> = ({ onSubmit, address }) => {
-  const [formData, setFormData] = useState<RecojoFormData & { carnet: string; nombreCompleto: string }>({
+  const initialFormData = {
     direccion: address,
     detallesCasa: '',
     tipoResiduo: 'organico',
@@ -15,15 +16,29 @@ const RecojoForm: React.FC<RecojoFormProps> = ({ onSubmit, address }) => {
     referencia: '',
     carnet: '',
     nombreCompleto: ''
-  });
+  };
+
+  const [formData, setFormData] = useState<RecojoFormData & { carnet: string; nombreCompleto: string }>(initialFormData);
 
   useEffect(() => {
     setFormData((prevData) => ({ ...prevData, direccion: address }));
   }, [address]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(formData);
+    
+    // Mostrar notificación de éxito
+    await Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "¡Solicitud enviada con éxito!",
+      showConfirmButton: false,
+      timer: 1500
+    });
+
+    // Reiniciar el formulario
+    setFormData(initialFormData);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {

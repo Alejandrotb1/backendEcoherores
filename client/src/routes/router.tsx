@@ -4,6 +4,11 @@ import SolicitudPage from '../pages/Solicitud';
 import Inicio from '../pages/Inicio';
 import Contacto from '../pages/Contacto';
 import EcoHeroes from '../pages/EcoHeroes';
+import LoginPage from '../pages/Login';
+import RegisterPage from '../pages/Register';
+import AdminLayout from '../components/admin/AdminLayout';
+import Perfiles from '../pages/admin/Perfiles';
+import Rutas from '../pages/admin/Rutas';
 
 export const router = createBrowserRouter([
   {
@@ -13,6 +18,14 @@ export const router = createBrowserRouter([
       {
         path: '/',
         element: <Inicio />,
+      },
+      {
+        path: 'login',
+        element: <LoginPage />,
+      },
+      {
+        path: 'registro',
+        element: <RegisterPage />,
       },
       {
         path: 'solicitar-recojo',
@@ -25,6 +38,24 @@ export const router = createBrowserRouter([
       {
         path: 'contacto',
         element: <Contacto />,
+      },
+    ],
+  },
+  {
+    path: '/admin',
+    element: <AdminLayout />,
+    children: [
+      {
+        path: 'perfiles',
+        element: <Perfiles />,
+      },
+      {
+        path: 'rutas',
+        element: <Rutas />,
+      },
+      {
+        path: 'solicitudes',
+        element: <div>Página de Solicitudes</div>,
       },
     ],
   },
