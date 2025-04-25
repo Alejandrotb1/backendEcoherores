@@ -1,54 +1,55 @@
-# React + TypeScript + Vite
+# Instrucciones para Ejecutar el Cliente
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este documento proporciona una guía paso a paso para instalar y ejecutar el cliente de la aplicación.
 
-Currently, two official plugins are available:
+## Requisitos Previos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Antes de comenzar, asegúrate de tener instalado lo siguiente:
 
-## Expanding the ESLint configuration
+1. **Node.js**: Necesitarás Node.js para ejecutar el cliente. Puedes descargarlo e instalarlo desde [nodejs.org](https://nodejs.org/).
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+2. **npm**: Node.js viene con npm, que es el gestor de paquetes que utilizaremos para instalar las dependencias del proyecto.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Pasos para Ejecutar el Cliente
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Sigue estos pasos para configurar y ejecutar el cliente:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. **Clonar el Repositorio**
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+   Si aún no lo has hecho, clona el repositorio del proyecto en tu máquina local.
+
+   ```bash
+   git clone <URL_DEL_REPOSITORIO>
+   ```
+
+2. **Navegar al Directorio del Cliente**
+
+   Cambia al directorio del cliente:
+
+   ```bash
+   cd client
+   ```
+
+3. **Instalar Dependencias**
+
+   Ejecuta el siguiente comando para instalar todas las dependencias necesarias:
+
+   ```bash
+   npm install
+   ```
+
+4. **Ejecutar el Cliente en Modo de Desarrollo**
+
+   Una vez que las dependencias estén instaladas, puedes iniciar el cliente en modo de desarrollo con el siguiente comando:
+
+   ```bash
+   npm run dev
+   ```
+
+   Esto abrirá el cliente en tu navegador predeterminado. Si no se abre automáticamente, puedes acceder manualmente a través de la URL que se muestra en la terminal (normalmente `http://localhost:3000`).
+
+## Notas Adicionales
+
+- Si encuentras algún problema durante la instalación o ejecución, asegúrate de que todas las dependencias estén correctamente instaladas y que estás utilizando la versión correcta de Node.js.
+
+- Para detener el servidor de desarrollo, puedes presionar `Ctrl + C` en la terminal donde se está ejecutando.
